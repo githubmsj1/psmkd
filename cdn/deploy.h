@@ -9,6 +9,9 @@
 #include <string>
 #include <sstream>
 #include <utility>
+#include <queue>
+#include <algorithm>
+
 
 using namespace std;
 class NetworkNode;
@@ -108,6 +111,8 @@ public:
 	size_t getDemand(){return demand;}	
 	size_t getNumFlow(){return flowUsed.size();}
 	int sap(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t start, size_t end);
+	int saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, size_t end);
+	size_t sapV(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t start, size_t end);
 	vector<Flow* >* getFlowLib(){return &flowLib;}
 	int initMapEdgeRoute(size_t _numNode);
 	int selectFlow();
@@ -116,6 +121,11 @@ public:
 	// int editFlow(long int deltaFlow){totalFlow+=deltaFlow;}
 	int sortFlow();
 	int editConsIndex(size_t _index){indexNode=_index; return 0;}
+	int sapBfs(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t end);
+	long int getMaxRestFlow(){return maxRestFlow;}
+	long int getRestFlow(size_t index){return restFlow[sortIndexRestFlow[index]];}
+	size_t getIndexMaxRestFlow(){return indexMaxRestFlow;}
+	
 private:
 	size_t toIndexNode;
 	size_t demand;
@@ -124,7 +134,12 @@ private:
 	vector<Flow* >flowLib;
 	vector<pair<size_t,size_t> >flowUsed;//index of flow, flow
 	vector<vector<vector<size_t> > >mapEdgeRoute;
+	vector<long int> restFlow;
+	vector<size_t> sortIndexRestFlow;
+
 	size_t totalFlow;
+	size_t indexMaxRestFlow;
+	long int maxRestFlow;
 };
 
 
