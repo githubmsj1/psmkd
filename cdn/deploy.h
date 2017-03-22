@@ -18,6 +18,7 @@ using namespace std;
 class NetworkNode;
 class ConsNode;
 class Flow;
+class EdgeMatrix;
 void deploy_server(char * graph[MAX_EDGE_NUM], int edge_num, char * filename);
 
 class NetworkInfo
@@ -34,6 +35,7 @@ public:
 
 	int loadNetInfo();
 	int loadData(NetworkNode networkNodeGroup[], ConsNode consNodeGroup[]);
+	int loadData(NetworkNode networkNodeGroup[], ConsNode consNodeGroup[], EdgeMatrix& edgeMatrix);
 	int str2Vec(char *str, vector<int>& vec);
 	size_t getNumNode(){return numNode;}
 	size_t getNumEdge(){return numEdge;}
@@ -116,6 +118,7 @@ public:
 	int sapss(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, vector<size_t>& end);
 	size_t sapV(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t start, size_t end);
 	vector<Flow* >* getFlowLib(){return &flowLib;}
+	vector<pair<size_t,size_t> >* getFlowUsed(){return &flowUsed;}
 	int initMapEdgeRoute(size_t _numNode);
 	int initCons(NetworkInfo networkInfo);
 	int selectFlow();
@@ -130,6 +133,7 @@ public:
 	size_t getIndexMaxRestFlow(){return indexMaxRestFlow;}
 	long int getBandWidthUsed(size_t i, size_t j);
 	int searchEdgeInFlow(pair<size_t, size_t> &Edge, pair<size_t,size_t> &flow);
+
 private:
 	size_t toIndexNode;
 	size_t demand;
@@ -203,6 +207,8 @@ public:
 	int resetMatrix();
 	size_t costCal();
 	int update(ConsNode consNodeGroup[],size_t numCons);
+	int checkCons(ConsNode consNodeGroup[],NetworkInfo networkInfo);
+	void printMatrix();
 private:
 	size_t numNode;
 	size_t numCons;
