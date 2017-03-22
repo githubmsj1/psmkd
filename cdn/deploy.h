@@ -11,6 +11,7 @@
 #include <utility>
 #include <queue>
 #include <algorithm>
+#include <map>
 
 
 using namespace std;
@@ -112,29 +113,34 @@ public:
 	size_t getNumFlow(){return flowUsed.size();}
 	int sap(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t start, size_t end);
 	int saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, size_t end);
+	int sapss(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, vector<size_t>& end);
 	size_t sapV(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t start, size_t end);
 	vector<Flow* >* getFlowLib(){return &flowLib;}
 	int initMapEdgeRoute(size_t _numNode);
+	int initCons(NetworkInfo networkInfo);
 	int selectFlow();
-	int regulate(vector<pair<size_t, size_t> >& overLoadEdge);
+	int regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long int>& overLoad);
 	int popRoute(size_t index, vector<size_t>* route);
 	// int editFlow(long int deltaFlow){totalFlow+=deltaFlow;}
 	int sortFlow();
 	int editConsIndex(size_t _index){indexNode=_index; return 0;}
 	int sapBfs(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t end);
 	long int getMaxRestFlow(){return maxRestFlow;}
-	long int getRestFlow(size_t index){return restFlow[sortIndexRestFlow[index]];}
+	long int getRestFlow(size_t index){return restFlowGraph[sortIndexRestFlow[index]];}
 	size_t getIndexMaxRestFlow(){return indexMaxRestFlow;}
-	
+	long int getBandWidthUsed(size_t i, size_t j);
+	int searchEdgeInFlow(pair<size_t, size_t> &Edge, pair<size_t,size_t> &flow);
 private:
 	size_t toIndexNode;
 	size_t demand;
 	size_t indexNode;
+	size_t numNetworkNode;
 
 	vector<Flow* >flowLib;
+	vector<long int>flowLibRest;
 	vector<pair<size_t,size_t> >flowUsed;//index of flow, flow
 	vector<vector<vector<size_t> > >mapEdgeRoute;
-	vector<long int> restFlow;
+	vector<long int> restFlowGraph;
 	vector<size_t> sortIndexRestFlow;
 
 	size_t totalFlow;
@@ -151,9 +157,12 @@ public:
 	~Route();
 	int popRouteAll2Str(string& str);
 	int pushRoute(vector<size_t>* route);
+	int editCost(size_t _cost);
+	size_t getCost(){return cost;}
 
 private:
 	vector<vector<size_t>* >routeG ;
+	size_t cost;
 
 };
 
@@ -181,16 +190,24 @@ private:
 class EdgeMatrix
 {
 public:
-	EdgeMatrix(size_t _numNode);
+	EdgeMatrix(size_t _numNode, size_t _numCons);
 	EdgeMatrix(const EdgeMatrix& _edgeMatrix);
 	~EdgeMatrix();
-	int checkOverLoad(vector<pair<size_t, size_t> >& overLoad);
+	int checkOverLoad(vector<pair<size_t, size_t> >& overLoad, vector<long int>& overLoadVal);
+	int loadEdge(size_t i, size_t j, long int deltaBandWidth);
 	int editEdge(size_t i, size_t j, long int deltaBandWidth);
 	long int getBandWidth(size_t i, size_t j)const{return matrix[i][j];}
 	size_t getSize() const{return numNode;}
+	int insertFlow(vector<size_t>& flow,size_t consIndex);
+	int resetMatrix();
+	size_t costCal();
+	int update(ConsNode consNodeGroup[],size_t numCons);
 private:
 	size_t numNode;
+	size_t numCons;
 	vector<vector<long int> >matrix;
+	vector<vector<long int> >matrixRef;
 	vector<pair<size_t, size_t> >checkList;
+	vector<vector<vector<long int> > >xCIJ;
 };
 #endif
