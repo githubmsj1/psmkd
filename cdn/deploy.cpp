@@ -99,35 +99,48 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	cout<<endl;
 	cout<<"++++++++++++++++++++++++++++++++++++++\n";
 
+
 	
-	//bfs sap
+	//bfs sap map
 	for(size_t i=0;i<networkInfo.getNumCons();i++)
 	{
 		consNodeGroup[i].sapBfs(networkNodeGroup,networkInfo,consNodeGroup[i].getToIndexNode());
 	}
 
-	// sort client according to restflow
-	for(size_t i=0;i<networkInfo.getNumCons()-1;i++)
+	//test whether the node of low demand is available get from other server; the 5th server position
+	for(size_t i=0;i<networkInfo.getNumCons();i++)
 	{
-		for(size_t j=i+1;j<networkInfo.getNumCons();j++)
+		if(consNodeGroup[consIndex[i]].getRestFlow(5)>(long int)consNodeGroup[consIndex[i]].getDemand())
 		{
-			if (consNodeGroup[consIndex[i]].getRestFlow(3)<consNodeGroup[consIndex[j]].getRestFlow(3))
-			{
-				size_t tmp=consIndex[i];
-				consIndex[i]=consIndex[j];
-				consIndex[j]=tmp;
-			}
+			size_t tmp=consIndex[0];
+			consIndex[0]=consIndex[i];
+			consIndex[i]=tmp;
+			break;
 		}
 	}
-	//show cons idx sorted by restflow : 5
-	cout<<"**************************************\n";
-	cout<<"sort cons node by restFlow: \n";
-	for(size_t i=0;i<consIndex.size();i++)
-	{
-		cout<<consIndex[i]<<"<"<<consNodeGroup[consIndex[i]].getRestFlow(3)<<">("<<consNodeGroup[consIndex[i]].getToIndexNode()<<") ";
-	}
-	cout<<endl;
-	cout<<"++++++++++++++++++++++++++++++++++++++\n";
+
+	// // sort client according to restflow
+	// for(size_t i=0;i<networkInfo.getNumCons()-1;i++)
+	// {
+	// 	for(size_t j=i+1;j<networkInfo.getNumCons();j++)
+	// 	{
+	// 		if (consNodeGroup[consIndex[i]].getRestFlow(3)<consNodeGroup[consIndex[j]].getRestFlow(3))
+	// 		{
+	// 			size_t tmp=consIndex[i];
+	// 			consIndex[i]=consIndex[j];
+	// 			consIndex[j]=tmp;
+	// 		}
+	// 	}
+	// }
+	// //show cons idx sorted by restflow : 5
+	// cout<<"**************************************\n";
+	// cout<<"sort cons node by restFlow: \n";
+	// for(size_t i=0;i<consIndex.size();i++)
+	// {
+	// 	cout<<consIndex[i]<<"<"<<consNodeGroup[consIndex[i]].getRestFlow(3)<<">("<<consNodeGroup[consIndex[i]].getToIndexNode()<<") ";
+	// }
+	// cout<<endl;
+	// cout<<"++++++++++++++++++++++++++++++++++++++\n";
 
 	vector<size_t>serverPos;
 	for(size_t i=1;i<consIndex.size();i++)
@@ -156,20 +169,32 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 			pair<size_t,size_t>* tmpPair=(*path)[j];
 			cout<<tmpPair->first<<"<"<<tmpPair->second<<"> ";
 		}
-		cout<<flowLib[i]->getEnd()<<endl;
+		// cout<<flowLib[i]->getEnd()<<endl;
+		cout<<endl;
 	}
 	cout<<"++++++++++++++++++++++++++++++++++++++"<<endl;
 	
 
+	//test regulate
+	/*
 	vector<pair<size_t, size_t> >overLoadEdge;
 	vector<long int> overLoad;
 	overLoadEdge.push_back(pair<size_t,size_t>(22,23));
 	overLoadEdge.push_back(pair<size_t,size_t>(22,24));
 	overLoadEdge.push_back(pair<size_t,size_t>(24,20));
-	overLoad.push_back(3);
+	// overLoadEdge.push_back(pair<size_t,size_t>(31,3));
+	overLoad.push_back(5);
 	overLoad.push_back(2);
 	overLoad.push_back(1);
+	// overLoad.push_back(1);
 	consNodeGroup[consIndex[0]].regulate(overLoadEdge,overLoad);
+	overLoadEdge.clear();
+	overLoad.clear();
+	overLoadEdge.push_back(pair<size_t,size_t>(22,21));
+	overLoad.push_back(3);
+	consNodeGroup[consIndex[0]].regulate(overLoadEdge,overLoad);
+	*/
+
 	//SAP
 	/*
 	size_t start=38;
@@ -280,7 +305,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 
 
 	Route routeOutput;
-	cout<<"Flow number: "<<consNodeGroup[consIndex[0]].getNumFlow()<<endl;
+	// cout<<"Flow number: "<<consNodeGroup[consIndex[0]].getNumFlow()<<endl;
 	for(size_t i=0;i<consNodeGroup[consIndex[0]].getNumFlow();i++)
 	{
 		vector<size_t>* route=new vector<size_t>();
@@ -633,7 +658,7 @@ int ConsNode::sapBfs(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,siz
 
 	// nodeQueue.push(end);
 	visitNode[end]=1;
-	cout<<"BFS: "<<endl;
+	// cout<<"BFS: "<<endl;
 	for(size_t i=0;i<_networkNodeGroup[end].getEdgeSize();i++)
 	{		
 		nodeQueue.push(_networkNodeGroup[end].getToIndexNode(i));
@@ -673,16 +698,16 @@ int ConsNode::sapBfs(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,siz
 			}
 		}
 
-	cout<<"Sorted rest flow: ";
-	for(size_t i=0;i<sortIndexRestFlow.size()-1;i++)
-	{
-		cout<<sortIndexRestFlow[i]<<"<"<<restFlowGraph[sortIndexRestFlow[i]]<<"> ";
-	}
-	cout<<endl;
+	// cout<<"Sorted rest flow: ";
+	// for(size_t i=0;i<sortIndexRestFlow.size()-1;i++)
+	// {
+	// 	cout<<sortIndexRestFlow[i]<<"<"<<restFlowGraph[sortIndexRestFlow[i]]<<"> ";
+	// }
+	// cout<<endl;
 
 	indexMaxRestFlow=sortIndexRestFlow[1];//not include the end
 	maxRestFlow=restFlowGraph[indexMaxRestFlow];
-	cout<<"MaxRestFlow: "<<indexMaxRestFlow<<"<"<<maxRestFlow<<">"<<endl;
+	// cout<<"MaxRestFlow: "<<indexMaxRestFlow<<"<"<<maxRestFlow<<">"<<endl;
 
 	return 0;
 }
@@ -913,7 +938,9 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 				}
 			}
 
-			cout<<end<<endl;
+			cout<<end<<"<"<<0<<">"<<" ";
+			tmp->pushPair(end,0);
+			cout<<endl;
 
 			flowLib.push_back(tmp);
 			
@@ -969,9 +996,10 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 
 	//delete tmp networkNodeGroup
 
-	//sort flowlib
+	//sort flowlib according to distance
 	sortFlow();
 
+	//update map from Edge to path index
 	if(mapEdgeRoute.size()==0)
 	{
 		cout<<"mapEdgeRoute not initialized"<<endl;
@@ -1010,6 +1038,8 @@ int ConsNode::initMapEdgeRoute(size_t _numNode)
 
 int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long int>& overLoad)/////here
 {
+	cout<<"**************************************\n";
+
 	vector<vector<int> >countUsed;
 	vector<vector<int> >countLib;
 	vector<int>tmp1;tmp1.resize(flowUsed.size(),0);
@@ -1054,7 +1084,7 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 
 
 	
-	cout<<"edge over flow: \n";
+	cout<<"edge over flow before remove: \n";
 	for(size_t i=0;i<overLoadEdge.size();i++)
 	{
 		cout<<"("<<overLoadEdge[i].first<<","<<overLoadEdge[i].second<<"): "<<overLoad[i]<<endl;
@@ -1200,12 +1230,13 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 
 	}
 
-	cout<<"rest over load: ";
-	for(size_t i=0;i<overLoadRest.size();i++)
+	cout<<"edge over flow after remove: \n";
+	for(size_t i=0;i<overLoadEdge.size();i++)
 	{
-		cout<<overLoadRest[i]<<" ";
+		cout<<"("<<overLoadEdge[i].first<<","<<overLoadEdge[i].second<<"): "<<overLoadRest[i]<<endl;
 	}
 	cout<<endl;
+
 
 	cout<<"overload fixed: ";
 	if(overloadOrNot==-1)
@@ -1214,48 +1245,61 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 		cout<<"No";
 	cout<<endl;
 
-	cout<<"minusFlow: ";
+	cout<<"flow need to compensate: ";
 		cout<<minusFlow;
-	cout<<endl;
+	cout<<endl<<endl;
 
 	//add edge (can't guarantee the added edge is not the overload one, because the demand should be satisfied first)
 	for(size_t i=0;i<flowLib.size();i++)
 	{
 		size_t iSorted=libIndex[i];
-		cout<<iSorted<<"-";
+		// cout<<iSorted<<"-";
 		if(tmpRestFlow[iSorted]>0)
 		{
 
-				long int deltaFlow=0;
-				if(tmpRestFlow[iSorted]>minusFlow)
-				{
-					deltaFlow=minusFlow;
-				}
-				else
-				{
-					deltaFlow=tmpRestFlow[iSorted];
-				}
+			long int deltaFlow=0;
+			if(tmpRestFlow[iSorted]>minusFlow)
+			{
+				deltaFlow=minusFlow;
+			}
+			else
+			{
+				deltaFlow=tmpRestFlow[iSorted];
+			}
 
-				if(mapLibToUsed[iSorted]==-1)
-				{
-					pair<size_t,size_t>tmp(iSorted,deltaFlow);
-					tmpFlowUsed.push_back(tmp);
-				}
-				else
-				{
-					tmpFlowUsed[mapLibToUsed[iSorted]].second+=deltaFlow;
-				}
+			if(mapLibToUsed[iSorted]==-1)
+			{
+				pair<size_t,size_t>tmp(iSorted,deltaFlow);
+				tmpFlowUsed.push_back(tmp);
+			}
+			else
+			{
+				tmpFlowUsed[mapLibToUsed[iSorted]].second+=deltaFlow;
+			}
 
-				// tmpRestFlow[iSorted]-=deltaFlow;
-				minusFlow-=deltaFlow;
-				if(minusFlow==0)
-					break;
+			// tmpRestFlow[iSorted]-=deltaFlow;
+			minusFlow-=deltaFlow;
+
+			//update the rest overload edge
+			for(size_t j=0;j<overLoadEdge.size();j++)
+			{
+				if(countLib[j][iSorted]==1)
+					overLoadRest[j]+=deltaFlow;
+			}
+
+			if(minusFlow==0)
+				break;
 			// }
 		}
 		
 	}
 
-
+	cout<<"edge over flow after add edge: \n";
+	for(size_t i=0;i<overLoadEdge.size();i++)
+	{
+		cout<<"("<<overLoadEdge[i].first<<","<<overLoadEdge[i].second<<"): "<<overLoadRest[i]<<endl;
+	}
+	cout<<endl;
 
 	//update tmpRestFlow
 	for(size_t i=0;i<flowLib.size();i++)
@@ -1294,8 +1338,30 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 		cout<<"("<<tmpFlowUsed[i].second<<") <"<<tmpRestFlow[tmpFlowUsed[i].first]<<">"<<endl;
 	}
 
+	//update flow used and rest
+	flowLibRest.clear();
+	flowUsed.clear();
+	for(size_t i=0;i<tmpFlowUsed.size();i++)
+	{
+		pair<size_t,size_t>tmp(tmpFlowUsed[i]);
+		flowUsed.push_back(tmp);
+	}
+	for(size_t i=0;i<tmpRestFlow.size();i++)
+	{
+		flowLibRest.push_back(tmpRestFlow[i]);
+	}
+	for(size_t i=0;i<overLoad.size();i++)
+	{
+		overLoad[i]=overLoadRest[i];
+	}
+	 
+	//update the overload
+
+	// flowLibRest=tmpRestFlow;
 
 
+
+	cout<<"++++++++++++++++++++++++++++++++++++++\n";
 	return 0;
 }
 
@@ -1311,13 +1377,16 @@ int ConsNode::searchEdgeInFlow(pair<size_t, size_t> &Edge, pair<size_t,size_t> &
 	return -1;
 }
 
+
+
+
 int ConsNode::sortFlow()
 {
 	for (size_t i=0;i<flowLib.size()-1;i++)
 	{
 		for(size_t j=i+1;j<flowLib.size();j++)
 		{
-			if(flowLib[i]->getRestFlow()>flowLib[j]->getRestFlow())
+			if(flowLib[i]->getLength()>flowLib[j]->getLength())
 			{
 				Flow* tmp=flowLib[i];
 				flowLib[i]=flowLib[j];
@@ -1400,7 +1469,7 @@ int ConsNode::popRoute(size_t index, vector<size_t>* _route)
 	vector<pair<size_t,size_t>* > &path=*(tmpflow->getPath());
 	for(size_t i=0;i<path.size();i++)
 		_route->push_back(path[i]->first); 
-	_route->push_back(tmpflow->getEnd());//index connect to client
+	// _route->push_back(tmpflow->getEnd());//index connect to client
 	_route->push_back(indexNode);//index of client
 	_route->push_back(flowUsed[index].second);//flow
 

@@ -39,6 +39,12 @@ sstream
 -
 utility
 -
+queue
+-
+algorithm
+-
+map
+-
 
 /home/game/SDK-gcc/cdn/io.cpp
 stdio.h

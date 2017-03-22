@@ -174,6 +174,7 @@ public:
 	Flow(size_t _start, size_t _end):start(_start),end(_end){restFlow=0;}
 	~Flow();
 	size_t getRestFlow(){return restFlow;}
+	size_t getLength(){return path.size();}
 	size_t editFlow(int deltaFlow){restFlow+=deltaFlow;return restFlow;}
 	int pushPair(size_t nodeIndex, size_t edgeIndex);
 	int getStart(){return start;}
