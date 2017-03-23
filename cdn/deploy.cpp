@@ -827,6 +827,7 @@ int ConsNode::sapBfs(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,siz
 	}
 	
 
+	size_t loopTime=0;
 	while(!nodeQueue.empty())
 	{
 		size_t idx=nodeQueue.front();
@@ -844,6 +845,9 @@ int ConsNode::sapBfs(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,siz
 				visitNode[_networkNodeGroup[idx].getToIndexNode(i)]=1;
 			}
 		}
+		loopTime++;
+		if(loopTime>20)
+			break;
 
 	}
 
