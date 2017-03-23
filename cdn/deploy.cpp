@@ -1774,7 +1774,7 @@ EdgeMatrix::EdgeMatrix(size_t _numNode, size_t _numCons):numNode(_numNode),numCo
 	matrix.resize(_numNode,tmp);
 	matrixRef.resize(_numNode,tmp);
 
-	xCIJ.resize(_numCons,matrixRef);
+	// xCIJ.resize(_numCons,matrixRef);
 	// // verify matrix
 	// matrix[3][4]=999;
 

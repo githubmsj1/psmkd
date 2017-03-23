@@ -220,6 +220,6 @@ private:
 	vector<vector<long int> >matrix;
 	vector<vector<long int> >matrixRef;
 	vector<pair<size_t, size_t> >checkList;
-	vector<vector<vector<long int> > >xCIJ;
+	// vector<vector<vector<long int> > >xCIJ;
 };
 #endif
