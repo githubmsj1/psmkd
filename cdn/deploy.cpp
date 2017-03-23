@@ -137,7 +137,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	}
 
 	//test whether the node of third low demand is available get from other server; the 5th server position
-	for(size_t i=1;i<networkInfo.getNumCons();i++)
+	for(size_t i=2;i<networkInfo.getNumCons();i++)
 	{
 		if(consNodeGroup[consIndex[i]].getRestFlow(5)>(long int)consNodeGroup[consIndex[i]].getDemand())
 		{
