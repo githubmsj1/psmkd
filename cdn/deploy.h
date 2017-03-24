@@ -148,10 +148,10 @@ private:
 	vector<Flow* >flowLib;
 	vector<long int>flowLibRest;
 	vector<pair<size_t,size_t> >flowUsed;//index of flow, flow
-	vector<vector<vector<size_t> > >mapEdgeRoute;
+	// vector<vector<vector<size_t> > >mapEdgeRoute;
 	vector<long int> restFlowGraph;
 	vector<size_t> sortIndexRestFlow;
-
+	map<pair<size_t, size_t>,vector<size_t>>mapEdgeRoute;
 	size_t totalFlow;
 	// size_t indexMaxRestFlow;
 	// long int maxRestFlow;

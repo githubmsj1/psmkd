@@ -26,6 +26,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 
 	networkInfo.loadData(networkNodeGroup, consNodeGroup, globalEdgeMatrix);
 
+
 	//initialize ConsNode 
 	for(size_t i=0;i<networkInfo.getNumCons();i++)
 		consNodeGroup[i].initCons(networkInfo);
@@ -112,6 +113,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	cout<<"Time Cost[sort by demand]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
 	startTime=endTime;
 	
+
 	//bfs sap map
 	for(size_t i=0;i<networkInfo.getNumCons();i++)
 	{
@@ -646,8 +648,8 @@ NetworkNode::~NetworkNode()
 	while (adjEdge.size()!=0)
 	{
 		NetworkEdge* tmp=adjEdge.back();
-		delete tmp;
 		adjEdge.pop_back();
+		delete tmp;
 	}
 }
 
@@ -688,7 +690,15 @@ ConsNode::ConsNode()
 }
 
 ConsNode::~ConsNode()
-{}
+{
+	while(flowLib.size())//clear flow lib
+	{
+		Flow* tmp=flowLib.back();
+		flowLib.pop_back();
+		delete tmp;
+		
+	}
+}
 
 int ConsNode::initCons(NetworkInfo networkInfo)
 {
@@ -857,7 +867,8 @@ int ConsNode::sapBfs(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,siz
 		size_t idx=nodeQueue.front();
 		
 		nodeQueue.pop();
-		long int _restFlow=(long int)(sapV(_networkNodeGroup,networkInfo,idx,end)-demand);
+		// long int _restFlow=(long int)(sapV(_networkNodeGroup,networkInfo,idx,end)-demand);
+		long int _restFlow=1;
 		restFlowGraph[idx]=_restFlow;
 		sortIndexRestFlow.push_back(idx);
 		// cout<<idx<<"<"<<_restFlow<<"> ";
@@ -1199,7 +1210,8 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 		vector<pair<size_t,size_t>* > &path=*(tmpflow->getPath());
 		for(size_t i=0;i<path.size()-1;i++)
 		{
-			mapEdgeRoute[path[i]->first][path[i+1]->first].push_back(indexFlow);
+			mapEdgeRoute[make_pair(path[i]->first,path[i+1]->first)].push_back(indexFlow);
+			// mapEdgeRoute[path[i]->first][path[i+1]->first].push_back(indexFlow);
 		}
 	}
 
@@ -1216,12 +1228,12 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 
 int ConsNode::initMapEdgeRoute(size_t _numNode)
 {
-	if (mapEdgeRoute.size()==0)
-	{
-		vector<vector<size_t> >tmp;
-		tmp.resize(_numNode);
-		mapEdgeRoute.resize(_numNode,tmp);
-	}
+	// if (mapEdgeRoute.size()==0)
+	// {
+	// 	vector<vector<size_t> >tmp;
+	// 	tmp.resize(_numNode);
+	// 	mapEdgeRoute.resize(_numNode,tmp);
+	// }
 	return 0;
 }
 
@@ -1288,7 +1300,8 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 
 	for(size_t i=0;i<overLoadEdge.size();i++)
 	{
-		vector<size_t>& flowIndex=mapEdgeRoute[overLoadEdge[i].first][overLoadEdge[i].second];
+		// vector<size_t>& flowIndex=mapEdgeRoute[overLoadEdge[i].first][overLoadEdge[i].second];
+		vector<size_t>& flowIndex=mapEdgeRoute[make_pair(overLoadEdge[i].first,overLoadEdge[i].second)];
 		for(size_t j=0;j<flowIndex.size();j++)
 		{
 			countLib[i][flowIndex[j]]=1;
@@ -1569,7 +1582,7 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 
 int ConsNode::searchEdgeInFlow(pair<size_t, size_t> &Edge, pair<size_t,size_t> &flow)
 {
-	vector<size_t>& flowIndex=mapEdgeRoute[Edge.first][Edge.second];
+	vector<size_t>& flowIndex=mapEdgeRoute[Edge];//mapEdgeRoute[Edge.first][Edge.second];
 	for(size_t i=0;i<flowIndex.size();i++)
 	{
 		if(flow.first==flowIndex[i])
@@ -1582,7 +1595,8 @@ int ConsNode::searchEdgeInFlow(pair<size_t, size_t> &Edge, pair<size_t,size_t> &
 long int ConsNode::getEdgeLoad(pair<size_t, size_t> indexEdge)
 {
 	long int _bandWidth=0;
-	vector<size_t>&indexFlowLib=mapEdgeRoute[indexEdge.first][indexEdge.second];
+	// vector<size_t>&indexFlowLib=mapEdgeRoute[indexEdge.first][indexEdge.second];
+	vector<size_t>&indexFlowLib=mapEdgeRoute[make_pair(indexEdge.first,indexEdge.second)];
 	for(size_t i=0;i<indexFlowLib.size();i++)
 	{
 		if((long int)flowLib[indexFlowLib[i]]->getRestFlow()!=flowLibRest[indexFlowLib[i]])
@@ -1701,8 +1715,8 @@ int ConsNode::clearRoute()
 	while(flowLib.size())//clear flow lib
 	{
 		Flow* tmp=flowLib.back();
-		delete tmp;
 		flowLib.pop_back();
+		delete tmp;
 	}
 	flowLibRest.clear();//clear flow rest
 	flowUsed.clear();//clear flow used
@@ -1786,8 +1800,8 @@ Flow::~Flow()
 	while(path.size())
 	{
 		pair<size_t, size_t>* tmp=path.back();
-		delete tmp;
 		path.pop_back();
+		delete tmp;
 	}
 }
 //**************************************************Class EdgeMatrix**************************************************
