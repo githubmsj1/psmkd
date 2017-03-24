@@ -9,12 +9,11 @@ using namespace std;
 //You need to complete the function 
 void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 {
-
+	clock_t startTime = clock();
 	// for(size_t i=0;i<MAX_EDGE_NUM;i++)
 	// {
 	// 	cout<<topo[i];
 	// }
-
 	NetworkInfo networkInfo(line_num,topo);
 	networkInfo.loadNetInfo();
 
@@ -77,7 +76,11 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	// 	cout<<i<<":"<<" "<<consNodeGroup[i].getToIndexNode()<<" "<<consNodeGroup[i].getDemand()<<endl;
 	// }
 
+	clock_t endTime = clock();
+	cout<<"Time Cost[read data]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
+	startTime=endTime;
 
+	
 	vector<size_t>consIndex;
 	for(size_t i=0;i<networkInfo.getNumCons();i++)
 		consIndex.push_back(i);
@@ -105,13 +108,19 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	cout<<endl;
 	cout<<"++++++++++++++++++++++++++++++++++++++\n";
 
-
+	endTime = clock();
+	cout<<"Time Cost[sort by demand]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
+	startTime=endTime;
 	
 	//bfs sap map
 	for(size_t i=0;i<networkInfo.getNumCons();i++)
 	{
 		consNodeGroup[i].sapBfs(networkNodeGroup,networkInfo,consNodeGroup[i].getToIndexNode());
 	}
+
+	endTime = clock();
+	cout<<"Time Cost[BFS sap map]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
+	startTime=endTime;
 
 	//test whether the node of low demand is available get from other server; the 5th server position
 	for(size_t i=0;i<networkInfo.getNumCons();i++)
@@ -179,6 +188,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 		serverPos.push_back(consNodeGroup[consIndex[i]].getToIndexNode());
 	}
 
+
 	//collect flow only for the node of 0 
 	// consNodeGroup[consIndex[0]].sap(networkNodeGroup,networkInfo,consNodeGroup[consIndex[1]].getToIndexNode(),consNodeGroup[consIndex[0]].getToIndexNode());
 	consNodeGroup[consIndex[0]].saps(networkNodeGroup,networkInfo,serverPos,consNodeGroup[consIndex[0]].getToIndexNode());
@@ -188,6 +198,9 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	consNodeGroup[consIndex[2]].saps(networkNodeGroup,networkInfo,serverPos,consNodeGroup[consIndex[2]].getToIndexNode());
 	cout<<"select: "<<consNodeGroup[consIndex[2]].selectFlow()<<endl;
 
+	endTime = clock();
+	cout<<"Time Cost[Search flow path by sap]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
+	startTime=endTime;
 
 	//check overload
 	// vector<pair<size_t, size_t> > overLoadEdge;
@@ -210,20 +223,27 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 
 	//test regulate
 	cout<<"**************************************\n";
-	for(size_t i=0;i<3;i++)
+	for(size_t i=0;i<10;i++)
 	{
 		vector<pair<size_t, size_t> > overLoadEdge;
 		vector<long int> overLoad;
 		if(globalEdgeMatrix.checkCons(consNodeGroup,networkInfo,overLoadEdge,overLoad)==0)
+		{
+			cout<<"No flow overload."<<endl;
 			break;
+		}
 		else
 		{
 			for(size_t j=0;j<networkInfo.getNumCons();j++)
 			{
 					if(consNodeGroup[j].regulate(overLoadEdge,overLoad)==0)
+					{	
+						cout<<"Regulation Done."<<endl;
 						break;
+					}
 			}
 		}
+		cout<<"Regulate: "<<i<<endl;
 		// cout<<"after regulation\n";
 		// for(size_t j=0;j<overLoadEdge.size();j++)
 		// {
@@ -231,6 +251,10 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 		// }
 	}
 	cout<<"++++++++++++++++++++++++++++++++++++++\n";
+
+	endTime = clock();
+	cout<<"Time Cost[Regulate over load edge]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
+	startTime=endTime;
 
 	// cout<<"**************************************\n";
 	// cout<<"overload edge used for client"<<endl;
