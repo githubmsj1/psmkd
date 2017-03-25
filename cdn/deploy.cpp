@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <iostream>
 
+#define NUM_SERVER 30
 using namespace std;
-
 
 
 //You need to complete the function 
@@ -99,15 +99,16 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 			}
 		}
 	}
-	//show cons idx sorted by demand
-	cout<<"**************************************\n";
-	cout<<"sort cons node by demand: \n";
-	for(size_t i=0;i<consIndex.size();i++)
-	{
-		cout<<consIndex[i]<<"<"<<consNodeGroup[consIndex[i]].getDemand()<<">("<<consNodeGroup[consIndex[i]].getToIndexNode()<<") ";
-	}
-	cout<<endl;
-	cout<<"++++++++++++++++++++++++++++++++++++++\n";
+
+	// //show cons idx sorted by demand
+	// cout<<"**************************************\n";
+	// cout<<"sort cons node by demand: \n";
+	// for(size_t i=0;i<consIndex.size();i++)
+	// {
+	// 	cout<<consIndex[i]<<"<"<<consNodeGroup[consIndex[i]].getDemand()<<">("<<consNodeGroup[consIndex[i]].getToIndexNode()<<") ";
+	// }
+	// cout<<endl;
+	// cout<<"++++++++++++++++++++++++++++++++++++++\n";
 
 	endTime = clock();
 	cout<<"Time Cost[sort by demand]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
@@ -124,40 +125,22 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	cout<<"Time Cost[BFS sap map]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
 	startTime=endTime;
 
-	//test whether the node of low demand is available get from other server; the 5th server position
-	for(size_t i=0;i<networkInfo.getNumCons();i++)
+
+	///test whether the node of low demand is available get from other server; 
+	for(size_t k=0;k<NUM_SERVER;k++)
 	{
-		if(consNodeGroup[consIndex[i]].getRestFlow(5)>(long int)consNodeGroup[consIndex[i]].getDemand())
+		for(size_t i=k;i<networkInfo.getNumCons();i++)
 		{
-			size_t tmp=consIndex[0];
-			consIndex[0]=consIndex[i];
-			consIndex[i]=tmp;
-			break;
-		}
-	}
-	//test whether the node of second low demand is available get from other server; the 5th server position
-	for(size_t i=1;i<networkInfo.getNumCons();i++)
-	{
-		if(consNodeGroup[consIndex[i]].getRestFlow(5)>(long int)consNodeGroup[consIndex[i]].getDemand())
-		{
-			size_t tmp=consIndex[1];
-			consIndex[1]=consIndex[i];
-			consIndex[i]=tmp;
-			break;
+			if(consNodeGroup[consIndex[i]].getRestFlow(5)>(long int)consNodeGroup[consIndex[i]].getDemand())
+			{
+				size_t tmp=consIndex[0];
+				consIndex[0]=consIndex[i];
+				consIndex[i]=tmp;
+				break;
+			}
 		}
 	}
 
-	//test whether the node of third low demand is available get from other server; the 5th server position
-	for(size_t i=2;i<networkInfo.getNumCons();i++)
-	{
-		if(consNodeGroup[consIndex[i]].getRestFlow(5)>(long int)consNodeGroup[consIndex[i]].getDemand())
-		{
-			size_t tmp=consIndex[1];
-			consIndex[1]=consIndex[i];
-			consIndex[i]=tmp;
-			break;
-		}
-	}
 
 
 	// // sort client according to restflow
@@ -183,9 +166,9 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	// cout<<endl;
 	// cout<<"++++++++++++++++++++++++++++++++++++++\n";
 
-	//take out 2 server
+	//take out NUM_SERVER server
 	vector<size_t>serverPos;
-	for(size_t i=3;i<consIndex.size();i++)
+	for(size_t i=NUM_SERVER;i<consIndex.size();i++)
 	{
 		serverPos.push_back(consNodeGroup[consIndex[i]].getToIndexNode());
 	}
@@ -193,12 +176,11 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 
 	//collect flow only for the node of 0 
 	// consNodeGroup[consIndex[0]].sap(networkNodeGroup,networkInfo,consNodeGroup[consIndex[1]].getToIndexNode(),consNodeGroup[consIndex[0]].getToIndexNode());
-	consNodeGroup[consIndex[0]].saps(networkNodeGroup,networkInfo,serverPos,consNodeGroup[consIndex[0]].getToIndexNode());
-	cout<<"select: "<<consNodeGroup[consIndex[0]].selectFlow()<<endl;
-	consNodeGroup[consIndex[1]].saps(networkNodeGroup,networkInfo,serverPos,consNodeGroup[consIndex[1]].getToIndexNode());
-	cout<<"select: "<<consNodeGroup[consIndex[1]].selectFlow()<<endl;
-	consNodeGroup[consIndex[2]].saps(networkNodeGroup,networkInfo,serverPos,consNodeGroup[consIndex[2]].getToIndexNode());
-	cout<<"select: "<<consNodeGroup[consIndex[2]].selectFlow()<<endl;
+	for(size_t k=0;k<NUM_SERVER;k++)
+	{
+		consNodeGroup[consIndex[k]].saps(networkNodeGroup,networkInfo,serverPos,consNodeGroup[consIndex[k]].getToIndexNode());
+		cout<<"select: "<<consNodeGroup[consIndex[k]].selectFlow()<<endl;
+	}
 
 	endTime = clock();
 	cout<<"Time Cost[Search flow path by sap]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
@@ -281,6 +263,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	// 		cout<<tmpPair->first<<"<"<<tmpPair->second<<"> ";
 	// 	}
 	// 	// cout<<flowLib[i]->getEnd()<<endl;
+	// 	cout<<" {"<<flowLib[i]->getFlowCostUnit()<<"}";
 	// 	cout<<endl;
 	// }
 	// cout<<"++++++++++++++++++++++++++++++++++++++"<<endl;
@@ -416,36 +399,23 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 
 	Route routeOutput;
 
-	//first cons out of server
-	// cout<<"Flow number: "<<consNodeGroup[consIndex[0]].getNumFlow()<<endl;
-	for(size_t i=0;i<consNodeGroup[consIndex[0]].getNumFlow();i++)
+	//output the route for those apply flow from other servers
+	for(size_t k=0;k<NUM_SERVER;k++)
 	{
-		vector<size_t>* route=new vector<size_t>();
-		consNodeGroup[consIndex[0]].popRoute(i,route);
-		routeOutput.pushRoute(route);
+		for(size_t i=0;i<consNodeGroup[consIndex[k]].getNumFlow();i++)
+		{
+			vector<size_t>* route=new vector<size_t>();
+			consNodeGroup[consIndex[k]].popRoute(i,route);
+			routeOutput.pushRoute(route);
+		}
+
 	}
 
-	//second cons out of server
-	// cout<<"Flow number: "<<consNodeGroup[consIndex[0]].getNumFlow()<<endl;
-	for(size_t i=0;i<consNodeGroup[consIndex[1]].getNumFlow();i++)
-	{
-		vector<size_t>* route=new vector<size_t>();
-		consNodeGroup[consIndex[1]].popRoute(i,route);
-		routeOutput.pushRoute(route);
-	}
 
-	//thrid cons out of server
-	// cout<<"Flow number: "<<consNodeGroup[consIndex[0]].getNumFlow()<<endl;
-	for(size_t i=0;i<consNodeGroup[consIndex[2]].getNumFlow();i++)
-	{
-		vector<size_t>* route=new vector<size_t>();
-		consNodeGroup[consIndex[2]].popRoute(i,route);
-		routeOutput.pushRoute(route);
-	}
 
 
 	//the rest server direct connect to consume n-2
-	for (size_t i=3;i<networkInfo.getNumCons();i++)
+	for (size_t i=NUM_SERVER;i<networkInfo.getNumCons();i++)
 	{
 		vector<size_t>* route=new vector<size_t>();
 		
@@ -867,8 +837,8 @@ int ConsNode::sapBfs(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,siz
 		size_t idx=nodeQueue.front();
 		
 		nodeQueue.pop();
-		// long int _restFlow=(long int)(sapV(_networkNodeGroup,networkInfo,idx,end)-demand);
-		long int _restFlow=1;
+		long int _restFlow=(long int)(sapV(_networkNodeGroup,networkInfo,idx,end)-demand);
+		// long int _restFlow=1;
 		restFlowGraph[idx]=_restFlow;
 		sortIndexRestFlow.push_back(idx);
 		// cout<<idx<<"<"<<_restFlow<<"> ";
@@ -1135,7 +1105,9 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 					cout<<i<<"<"<<curEdges[i]<<">"<<" ";
 
 					tmp->pushPair(i,curEdges[i]);
+					tmp->editFlowCostUnit(networkNodeGroup[i].getCostUnit(curEdges[i]));
 				}
+
 			}
 
 			cout<<end<<"<"<<0<<">"<<" ";
@@ -1200,10 +1172,10 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 	sortFlow();
 
 	//update map from Edge to path index
-	if(mapEdgeRoute.size()==0)
-	{
-		cout<<"mapEdgeRoute not initialized"<<endl;
-	}
+	// if(mapEdgeRoute.size()==0)
+	// {
+	// 	cout<<"mapEdgeRoute not initialized"<<endl;
+	// }
 	for(size_t indexFlow=0;indexFlow<flowLib.size();indexFlow++)
 	{
 		Flow *tmpflow=flowLib[indexFlow];
@@ -1610,11 +1582,26 @@ long int ConsNode::getEdgeLoad(pair<size_t, size_t> indexEdge)
 
 int ConsNode::sortFlow()
 {
+	// //sort by path length
+	// for (size_t i=0;i<flowLib.size()-1;i++)
+	// {
+	// 	for(size_t j=i+1;j<flowLib.size();j++)
+	// 	{
+	// 		if(flowLib[i]->getLength()>flowLib[j]->getLength())
+	// 		{
+	// 			Flow* tmp=flowLib[i];
+	// 			flowLib[i]=flowLib[j];
+	// 			flowLib[j]=tmp;
+	// 		}
+	// 	}
+	// }
+
+	//sort by path cost
 	for (size_t i=0;i<flowLib.size()-1;i++)
 	{
 		for(size_t j=i+1;j<flowLib.size();j++)
 		{
-			if(flowLib[i]->getLength()>flowLib[j]->getLength())
+			if(flowLib[i]->getFlowCostUnit()>flowLib[j]->getFlowCostUnit())
 			{
 				Flow* tmp=flowLib[i];
 				flowLib[i]=flowLib[j];

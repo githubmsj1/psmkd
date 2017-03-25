@@ -94,6 +94,7 @@ public:
 	size_t getEdgeSize() const{return adjEdge.size();}
 	size_t getAntiEdgeIndex(size_t edgeIndex) const{return adjEdge[edgeIndex]->getAntiEdgeIndex();}
 	long int getToIndexCons() const{return toIndexCons;}
+
 	// int mergeDir();
 private:
 	vector<NetworkEdge*>adjEdge;
@@ -181,7 +182,7 @@ private:
 class Flow
 {
 public:
-	Flow(size_t _start, size_t _end):start(_start),end(_end){restFlow=0;}
+	Flow(size_t _start, size_t _end):start(_start),end(_end){restFlow=0;flowCostUnit=0;}
 	~Flow();
 	size_t getRestFlow(){return restFlow;}
 	size_t getLength(){return path.size();}
@@ -189,11 +190,14 @@ public:
 	int pushPair(size_t nodeIndex, size_t edgeIndex);
 	int getStart(){return start;}
 	int getEnd(){return end;}
+	int editFlowCostUnit(size_t costUnit){flowCostUnit+=costUnit; return 0;}
+	int getFlowCostUnit(){return flowCostUnit;}
 	vector<pair<size_t,size_t>* >* getPath(){return &path;}
 private:
 	size_t restFlow;
 	size_t start;
 	size_t end;
+	size_t flowCostUnit;
 	vector<pair<size_t,size_t>* > path;
 };
 
