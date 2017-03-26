@@ -43,6 +43,8 @@ public:
 	size_t getNumLine(){return numLine;}
 	size_t getCostServer(){return costServer;}
 	size_t getMatrixCost(size_t i, size_t j){return costMatrix[i][j];}
+	int sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, ConsNode consNodeGroup[]);
+
 private:
 	size_t numNode;
 	size_t numEdge;
@@ -118,7 +120,7 @@ public:
 	size_t getNumFlow(){return flowUsed.size();}
 	int sap(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t start, size_t end);
 	int saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, size_t end);
-	int sapss(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, vector<size_t>& end);
+	// int sapss(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, vector<size_t>& end);
 	size_t sapV(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t start, size_t end);
 	vector<Flow* >* getFlowLib(){return &flowLib;}
 	vector<pair<size_t,size_t> >* getFlowUsed(){return &flowUsed;}

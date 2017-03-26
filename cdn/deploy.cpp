@@ -10,6 +10,7 @@ using namespace std;
 void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 {
 	clock_t startTime = clock();
+	clock_t startTimeTotal=clock();
 	// for(size_t i=0;i<MAX_EDGE_NUM;i++)
 	// {
 	// 	cout<<topo[i];
@@ -104,7 +105,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 //-----------------------------------------------------------------------------------------------
 
 	//identify the number of server
-	size_t NUM_SERVER=(size_t)((double)networkInfo.getNumCons()*0.07);
+	size_t NUM_SERVER=(size_t)((double)networkInfo.getNumCons()*0.1);
 	for(;NUM_SERVER<networkInfo.getNumCons();NUM_SERVER++)
 	{
 		// sort client according to demand
@@ -220,7 +221,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 		//test regulate
 		int bandWidthNormal=-1;
 		cout<<"**************************************\n";
-		for(size_t i=0;i<10;i++)
+		for(size_t i=0;i<15;i++)
 		{
 			vector<pair<size_t, size_t> > overLoadEdge;
 			vector<long int> overLoad;
@@ -453,7 +454,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 		else
 		{	
 			cout<<"**************************************\n";
-			cout<<"bandwidth is overused!";
+			cout<<"bandwidth is overused!"<<endl;
 			cout<<"++++++++++++++++++++++++++++++++++++++\n";
 			break;
 		}
@@ -467,7 +468,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	}
 //-----------------------------------------------------------------------------------------------
 	endTime = clock();
-	cout<<"Time Cost[Rout solve time]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
+	cout<<"Time Cost[Rout solve time]-------------->"<<(double)(endTime - startTimeTotal)/CLOCKS_PER_SEC<<endl;
 	startTime=endTime;
 
 	cout<<"**************************************\n";
@@ -662,6 +663,227 @@ int NetworkInfo::loadData(NetworkNode networkNodeGroup[], ConsNode consNodeGroup
 		// cout<<tmp[0]<<" "<<tmp[1]<<" "<<tmp[2]<<endl;
 		consNodeGroup[tmp[0]].editConsIndex(tmp[0]);
 	}
+
+	return 0;
+}
+
+int NetworkInfo::sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, ConsNode consNodeGroup[])
+{
+	//copy tmp networkNodeGroup
+	vector<NetworkNode> networkNodeGroup;
+	for (size_t i=0;i<getNumNode();i++)
+	{
+		NetworkNode tmp(_networkNodeGroup[i]);
+		networkNodeGroup.push_back(tmp);
+	}
+
+	vector<size_t>_end;
+	for(size_t i=0;i<numCons;i++)
+	{
+		_end.push_back(consNodeGroup[i].getToIndexNode());
+	}
+
+	//construct a total start, connecting to all start.
+	NetworkNode tmpNode;
+	size_t startIndex=getNumNode();
+	cout<<"start: ";
+	for(size_t i=0;i<_start.size();i++)
+	{
+		cout<<_start[i]<<" ";
+	}
+	cout<<endl;
+	for(size_t i=0;i<_start.size();i++)
+	{	
+		//ToIndexNode BandWidth CostUnit
+		tmpNode.addEdge(_start[i],9999,0);
+		networkNodeGroup[_start[i]].addEdge(startIndex,9999,0);
+
+		size_t lastIdx0=tmpNode.getEdgeSize()-1;
+		size_t lastIdx1=networkNodeGroup[_start[i]].getEdgeSize()-1;
+
+		tmpNode.updateAntiEdgeIndex(lastIdx0,lastIdx1);
+		networkNodeGroup[_start[i]].updateAntiEdgeIndex(lastIdx1,lastIdx0);
+	}
+	
+	//construct a total end, connecting to all client. 
+	NetworkNode tmpNode1;
+	size_t endIndex=getNumNode()+1;
+	cout<<"end: ";
+	for(size_t i=0;i<_end.size();i++)
+	{
+		cout<<_end[i]<<" ";
+	}
+	cout<<endl;
+	for(size_t i=0;i<_end.size();i++)
+	{	
+		//ToIndexNode BandWidth CostUnit
+		tmpNode1.addEdge(_end[i],9999,0);
+		networkNodeGroup[_end[i]].addEdge(endIndex,9999,0);
+
+		size_t lastIdx0=tmpNode1.getEdgeSize()-1;
+		size_t lastIdx1=networkNodeGroup[_end[i]].getEdgeSize()-1;
+
+		tmpNode1.updateAntiEdgeIndex(lastIdx0,lastIdx1);
+		networkNodeGroup[_end[i]].updateAntiEdgeIndex(lastIdx1,lastIdx0);
+	}
+
+
+	networkNodeGroup.push_back(tmpNode);//push total start
+	networkNodeGroup.push_back(tmpNode1);//push total end
+
+	size_t start=startIndex;
+	size_t end=endIndex;
+
+	size_t numNode=getNumNode()+2;
+
+	size_t neck=-1;
+	size_t u;
+	size_t h[numNode];
+	size_t cur_flow,flow_ans=0,tmp;
+
+	int numh[numNode],curEdges[numNode],pre[numNode];
+	for (size_t i=0;i<numNode;i++)
+	{
+		numh[i]=0;
+		h[i]=0;
+		pre[i]=-1;
+		curEdges[i]=0;
+	}
+
+	numh[0]=numNode;
+	u=start;
+
+	cout<<"augment route: "<<endl;
+	while(h[start]<numNode)
+	{
+		if(u==end)
+		{
+			cur_flow=9999;
+
+
+			static size_t routeIndex=0;
+			routeIndex++;
+
+			// Flow *tmp=new Flow(start,end);
+
+			cout<<routeIndex<<"(";
+			for(size_t i=start;i!=end;i=networkNodeGroup[i].getToIndexNode(curEdges[i]))
+			{
+				if(cur_flow>networkNodeGroup[i].getBandWidth(curEdges[i]))
+				{
+					neck=i;
+					cur_flow=networkNodeGroup[i].getBandWidth(curEdges[i]);
+				}
+
+
+
+			}
+
+			cout<<cur_flow<<"): ";
+			// tmp->editFlow(cur_flow);
+
+			for(size_t i=start;i!=end;i=networkNodeGroup[i].getToIndexNode(curEdges[i]))
+			{
+				networkNodeGroup[i].editBandWidth(curEdges[i],-cur_flow);
+				size_t antiNode=networkNodeGroup[i].getToIndexNode(curEdges[i]);
+				size_t antiEdge=networkNodeGroup[i].getAntiEdgeIndex(curEdges[i]);
+				networkNodeGroup[antiNode].editBandWidth(antiEdge,cur_flow);
+				
+				if (i!=start)//first node is virtual
+				{
+					//verify the route
+					cout<<i<<"<"<<curEdges[i]<<">"<<" ";
+
+					// tmp->pushPair(i,curEdges[i]);
+					// tmp->editFlowCostUnit(networkNodeGroup[i].getCostUnit(curEdges[i]));
+				}
+
+			}
+
+			// cout<<end<<"<"<<0<<">"<<" ";
+			// tmp->pushPair(end,0);
+			cout<<endl;
+
+			// flowLib.push_back(tmp);
+			
+
+			// totalFlow+=cur_flow;
+
+			flow_ans+=cur_flow;
+			u=neck;
+		}
+		// vector<NetworkEdge*>* adj=networkNodeGroup[u].getAdjEdge();
+
+		// vector<NetworkEdge*>::iterator itr;
+		// for (vector<NetworkEdge*>::iterator itr=adj->begin()+curEdges[i];itr!=adj->end();itr++)
+		// {
+		// 	if((*itr)->getBandWidth()&&h[u]==h[(*itr)->getToIndexNode()]+1)
+		// 	{
+		// 		break;
+		// 	}
+		// }
+
+		size_t i;
+		for (i=curEdges[u];i<networkNodeGroup[u].getEdgeSize();i++)
+		{
+			if(networkNodeGroup[u].getBandWidth(i)&&h[u]==h[networkNodeGroup[u].getToIndexNode(i)]+1)
+			{
+				break;
+			}
+		}
+
+		if(i!=networkNodeGroup[u].getEdgeSize())
+		{
+			curEdges[u]=i;
+			pre[networkNodeGroup[u].getToIndexNode(i)]=u;
+			u=networkNodeGroup[u].getToIndexNode(i);
+		}
+		else
+		{
+			if(0==--numh[h[u]])break;
+			curEdges[u]=0;
+
+			for(tmp=numNode,i=0;i<networkNodeGroup[u].getEdgeSize();i++)
+			{
+				if(networkNodeGroup[u].getBandWidth(i))
+					tmp=(tmp<h[networkNodeGroup[u].getToIndexNode(i)]?tmp:h[networkNodeGroup[u].getToIndexNode(i)]);
+			}
+			h[u]=tmp+1;
+			++numh[h[u]];
+			if(u!=start)
+				u=pre[u];
+		}
+
+	}
+
+	//delete tmp networkNodeGroup
+
+	//sort flowlib according to distance
+	// sortFlow();
+
+	//update map from Edge to path index
+	// if(mapEdgeRoute.size()==0)
+	// {
+	// 	cout<<"mapEdgeRoute not initialized"<<endl;
+	// }
+	// for(size_t indexFlow=0;indexFlow<flowLib.size();indexFlow++)
+	// {
+	// 	Flow *tmpflow=flowLib[indexFlow];
+	// 	vector<pair<size_t,size_t>* > &path=*(tmpflow->getPath());
+	// 	for(size_t i=0;i<path.size()-1;i++)
+	// 	{
+	// 		mapEdgeRoute[make_pair(path[i]->first,path[i+1]->first)].push_back(indexFlow);
+	// 		// mapEdgeRoute[path[i]->first][path[i+1]->first].push_back(indexFlow);
+	// 	}
+	// }
+
+	//update rest flow
+	// if(flowLibRest.size()!=0)
+	// 	flowLibRest.clear();
+	// for(size_t i=0;i<flowLib.size();i++)
+	// {
+	// 	flowLibRest.push_back(flowLib[i]->getRestFlow());
+	// }
 
 	return 0;
 }
@@ -1271,6 +1493,8 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 	return 0;
 }
 
+
+
 int ConsNode::initMapEdgeRoute(size_t _numNode)
 {
 	// if (mapEdgeRoute.size()==0)
@@ -1449,13 +1673,13 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 			long int tmpFlow=0;
 			if(countUsed[j][usedIndex[i]]==1)
 			{
-				if(overLoad[j]>=(long int)flowUsed[usedIndex[i]].second)
+				if(overLoadRest[j]>=(long int)flowUsed[usedIndex[i]].second)
 				{
 					tmpFlow=flowUsed[usedIndex[i]].second;
 				}
 				else
 				{
-					tmpFlow=overLoad[j];
+					tmpFlow=overLoadRest[j];
 				}
 			}
 			if(tmpFlow>maxFlow)
