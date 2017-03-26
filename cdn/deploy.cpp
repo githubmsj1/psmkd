@@ -104,8 +104,9 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 
 //-----------------------------------------------------------------------------------------------
 
+
 	//identify the number of server
-	size_t NUM_SERVER=(size_t)((double)networkInfo.getNumCons()*0.1);
+	size_t NUM_SERVER=(size_t)((double)networkInfo.getNumCons()*0.02);
 	for(;NUM_SERVER<networkInfo.getNumCons();NUM_SERVER++)
 	{
 		// sort client according to demand
@@ -131,9 +132,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 		// cout<<endl;
 		// cout<<"++++++++++++++++++++++++++++++++++++++\n";
 
-		endTime = clock();
-		cout<<"Time Cost[sort by demand]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
-		startTime=endTime;
+
 		
 
 
@@ -195,9 +194,9 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 			cout<<"select: "<<consNodeGroup[consIndex[k]].selectFlow()<<endl;
 		}
 
-		endTime = clock();
-		cout<<"Time Cost[Search flow path by sap]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
-		startTime=endTime;
+		// endTime = clock();
+		// cout<<"Time Cost[Search flow path by sap]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
+		// startTime=endTime;
 
 		//check overload
 		// vector<pair<size_t, size_t> > overLoadEdge;
@@ -221,7 +220,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 		//test regulate
 		int bandWidthNormal=-1;
 		cout<<"**************************************\n";
-		for(size_t i=0;i<15;i++)
+		for(size_t i=0;i<10;i++)
 		{
 			vector<pair<size_t, size_t> > overLoadEdge;
 			vector<long int> overLoad;
@@ -251,9 +250,9 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 		}
 		cout<<"++++++++++++++++++++++++++++++++++++++\n";
 
-		endTime = clock();
-		cout<<"Time Cost[Regulate over load edge]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
-		startTime=endTime;
+		// endTime = clock();
+		// cout<<"Time Cost[Regulate over load edge]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
+		// startTime=endTime;
 
 		// cout<<"**************************************\n";
 		// cout<<"overload edge used for client"<<endl;
@@ -468,8 +467,14 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	}
 //-----------------------------------------------------------------------------------------------
 	endTime = clock();
-	cout<<"Time Cost[Rout solve time]-------------->"<<(double)(endTime - startTimeTotal)/CLOCKS_PER_SEC<<endl;
+	cout<<"Time Cost[Find solution]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
 	startTime=endTime;
+
+
+	endTime = clock();
+	cout<<"Time Cost[Total run time]-------------->"<<(double)(endTime - startTimeTotal)/CLOCKS_PER_SEC<<endl;
+	startTime=endTime;
+
 
 	cout<<"**************************************\n";
 	cout<<"Total solution is "<<routeSolution.size()<<endl;
@@ -1316,11 +1321,11 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 
 	//construct a total start, connecting to all start.
 	NetworkNode tmpNode;
-	cout<<"start: ";
-	for(size_t i=0;i<_start.size();i++)
-	{
-		cout<<_start[i]<<" ";
-	}
+	// cout<<"start: ";
+	// for(size_t i=0;i<_start.size();i++)
+	// {
+	// 	cout<<_start[i]<<" ";
+	// }
 	cout<<endl;
 	for(size_t i=0;i<_start.size();i++)
 	{	
@@ -1358,7 +1363,7 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 	numh[0]=numNode;
 	u=start;
 
-	cout<<"augment route: "<<endl;
+	// cout<<"augment route: "<<endl;
 	while(h[start]<numNode)
 	{
 		if(u==end)
@@ -1371,7 +1376,7 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 
 			Flow *tmp=new Flow(start,end);
 
-			cout<<routeIndex<<"(";
+			// cout<<routeIndex<<"(";
 			for(size_t i=start;i!=end;i=networkNodeGroup[i].getToIndexNode(curEdges[i]))
 			{
 				if(cur_flow>networkNodeGroup[i].getBandWidth(curEdges[i]))
@@ -1384,7 +1389,7 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 
 			}
 
-			cout<<cur_flow<<"): ";
+			// cout<<cur_flow<<"): ";
 			tmp->editFlow(cur_flow);
 
 			for(size_t i=start;i!=end;i=networkNodeGroup[i].getToIndexNode(curEdges[i]))
@@ -1397,7 +1402,7 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 				if (i!=start)//first node is virtual
 				{
 					//verify the route
-					cout<<i<<"<"<<curEdges[i]<<">"<<" ";
+					// cout<<i<<"<"<<curEdges[i]<<">"<<" ";
 
 					tmp->pushPair(i,curEdges[i]);
 					tmp->editFlowCostUnit(networkNodeGroup[i].getCostUnit(curEdges[i]));
@@ -1405,9 +1410,9 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 
 			}
 
-			cout<<end<<"<"<<0<<">"<<" ";
+			// cout<<end<<"<"<<0<<">"<<" ";
 			tmp->pushPair(end,0);
-			cout<<endl;
+			// cout<<endl;
 
 			flowLib.push_back(tmp);
 			
@@ -1509,12 +1514,32 @@ int ConsNode::initMapEdgeRoute(size_t _numNode)
 int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long int>& overLoad)/////here
 {
 
+	//test whether the overload edge is in use
 	if(flowUsed.size()==0)
 	{
 		cout<<"No route is sat!"<<endl;
 		return -1;
 	}
+
+	int edgeInUsed=-1;
+	for(size_t i=0;i<overLoadEdge.size();i++)
+	{
+		for(size_t j=0;j<flowUsed.size();j++)
+		{
+			if(searchEdgeInFlow(overLoadEdge[i],flowUsed[j])==0)
+			{
+				edgeInUsed=0;
+			}
+		}
+	}
+	if(edgeInUsed==-1)
+	{
+		cout<<"Edge overload not in use"<<endl;
+		return -1;
+	}
+
 	cout<<"**************************************\n";
+
 
 	vector<vector<int> >countUsed;
 	vector<vector<int> >countLib;
@@ -1699,10 +1724,12 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 		minusFlow+=maxFlow;
 		// minusFlow+=minFlow;
 		tmpFlowUsed[usedIndex[i]].second-=maxFlow;
-		// tmpFlowUsed[usedIndex[i]].second-=minFlow;
-		if(tmpFlowUsed[usedIndex[i]].second==0)
-			tmpFlowUsed[usedIndex[i]];
 
+		// tmpFlowUsed[usedIndex[i]].second-=minFlow;
+		// if(tmpFlowUsed[usedIndex[i]].second==0)
+		// 	tmpFlowUsed[usedIndex[i]];
+
+		//if all overload edge is fixed, quit
 		overloadOrNot=-1;
 		for(size_t j=0;j<overLoad.size();j++)
 		{
@@ -1735,7 +1762,7 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 	cout<<endl<<endl;
 
 	//add edge (can't guarantee the added edge is not the overload one, because the demand should be satisfied first)
-	for(size_t i=0;i<flowLib.size();i++)
+	for(size_t i=0;i<flowLib.size();i++)//tmpRest is not updated
 	{
 		size_t iSorted=libIndex[i];
 		// cout<<iSorted<<"-";
