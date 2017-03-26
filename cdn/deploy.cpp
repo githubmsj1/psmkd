@@ -92,21 +92,26 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	for(size_t i=0;i<networkInfo.getNumCons();i++)
 		consIndex.push_back(i);
 
+
+
 	//bfs sap map
 	for(size_t i=0;i<networkInfo.getNumCons();i++)
 	{
 		consNodeGroup[i].sapBfs(networkNodeGroup,networkInfo,consNodeGroup[i].getToIndexNode());
 	}
 
+
+
 	endTime = clock();
 	cout<<"Time Cost[BFS sap map]-------------->"<<(double)(endTime - startTime)/CLOCKS_PER_SEC<<endl;
 	startTime=endTime;
 
 //-----------------------------------------------------------------------------------------------
-
-
 	//identify the number of server
-	size_t NUM_SERVER=(size_t)((double)networkInfo.getNumCons()*0.02);
+	size_t NUM_SERVER=(size_t)((double)networkInfo.getNumCons()*0.01);
+	cout<<"NUM_SERVER: "<<NUM_SERVER<<endl;
+
+
 	for(;NUM_SERVER<networkInfo.getNumCons();NUM_SERVER++)
 	{
 		// sort client according to demand
@@ -120,6 +125,8 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 					consIndex[i]=consIndex[j];
 					consIndex[j]=tmp;
 				}
+
+
 			}
 		}
 		// //show cons idx sorted by demand
@@ -475,6 +482,25 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	cout<<"Time Cost[Total run time]-------------->"<<(double)(endTime - startTimeTotal)/CLOCKS_PER_SEC<<endl;
 	startTime=endTime;
 
+
+
+	// //if no solution 
+	// if(routeSolution.size()==0)
+	// {
+	// 	Route* routeOutput=new Route();
+	// 	//the rest server direct connect to consume n-2
+	// 	for (size_t i=0;i<networkInfo.getNumCons();i++)
+	// 	{
+	// 		vector<size_t>* route=new vector<size_t>();
+			
+	// 		route->push_back(consNodeGroup[consIndex[i]].getToIndexNode());
+	// 		route->push_back(consIndex[i]);
+	// 		route->push_back(consNodeGroup[consIndex[i]].getDemand());
+
+	// 		routeOutput->pushRoute(route);
+	// 	}	
+	// 	routeSolution.push_back(routeOutput);
+	// }
 
 	cout<<"**************************************\n";
 	cout<<"Total solution is "<<routeSolution.size()<<endl;
@@ -1724,7 +1750,7 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 		minusFlow+=maxFlow;
 		// minusFlow+=minFlow;
 		tmpFlowUsed[usedIndex[i]].second-=maxFlow;
-
+		tmpRestFlow[usedIndex[i]]+=maxFlow;
 		// tmpFlowUsed[usedIndex[i]].second-=minFlow;
 		// if(tmpFlowUsed[usedIndex[i]].second==0)
 		// 	tmpFlowUsed[usedIndex[i]];

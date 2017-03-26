@@ -28,28 +28,28 @@ The CXX compiler identification is GNU, found in "/home/game/SDK-gcc/build/CMake
 Determining if the C compiler works passed with the following output:
 Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make.exe" "cmTC_1c5a2/fast"
-/usr/bin/make -f CMakeFiles/cmTC_1c5a2.dir/build.make CMakeFiles/cmTC_1c5a2.dir/build
+Run Build Command:"/usr/bin/make.exe" "cmTC_5396e/fast"
+/usr/bin/make -f CMakeFiles/cmTC_5396e.dir/build.make CMakeFiles/cmTC_5396e.dir/build
 make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
-Building C object CMakeFiles/cmTC_1c5a2.dir/testCCompiler.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_1c5a2.dir/testCCompiler.c.o   -c /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_1c5a2.exe
-/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_1c5a2.dir/link.txt --verbose=1
-/usr/bin/cc     -Wl,--enable-auto-import  CMakeFiles/cmTC_1c5a2.dir/testCCompiler.c.o  -o cmTC_1c5a2.exe -Wl,--out-implib,libcmTC_1c5a2.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
+Building C object CMakeFiles/cmTC_5396e.dir/testCCompiler.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_5396e.dir/testCCompiler.c.o   -c /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_5396e.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_5396e.dir/link.txt --verbose=1
+/usr/bin/cc     -Wl,--enable-auto-import  CMakeFiles/cmTC_5396e.dir/testCCompiler.c.o  -o cmTC_5396e.exe -Wl,--out-implib,libcmTC_5396e.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
 make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make.exe" "cmTC_c4e30/fast"
-/usr/bin/make -f CMakeFiles/cmTC_c4e30.dir/build.make CMakeFiles/cmTC_c4e30.dir/build
+Run Build Command:"/usr/bin/make.exe" "cmTC_7a1d9/fast"
+/usr/bin/make -f CMakeFiles/cmTC_7a1d9.dir/build.make CMakeFiles/cmTC_7a1d9.dir/build
 make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
-Building C object CMakeFiles/cmTC_c4e30.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_c4e30.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.6.2/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_c4e30.exe
-/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_c4e30.dir/link.txt --verbose=1
-/usr/bin/cc     -Wl,--enable-auto-import -v CMakeFiles/cmTC_c4e30.dir/CMakeCCompilerABI.c.o  -o cmTC_c4e30.exe -Wl,--out-implib,libcmTC_c4e30.dll.a -Wl,--major-image-version,0,--minor-image-version,0   
+Building C object CMakeFiles/cmTC_7a1d9.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_7a1d9.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.6.2/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_7a1d9.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_7a1d9.dir/link.txt --verbose=1
+/usr/bin/cc     -Wl,--enable-auto-import -v CMakeFiles/cmTC_7a1d9.dir/CMakeCCompilerABI.c.o  -o cmTC_7a1d9.exe -Wl,--out-implib,libcmTC_7a1d9.dll.a -Wl,--major-image-version,0,--minor-image-version,0   
 使用内建 specs。
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe
@@ -59,8 +59,8 @@ COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe
 gcc 版本 5.4.0 (GCC) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/bin/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c4e30.exe' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/collect2.exe -plugin /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/cyglto_plugin.dll -plugin-opt=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe -plugin-opt=-fresolution=/tmp/ccqbX2cH.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lcygwin -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id -m i386pep --wrap _Znwm --wrap _Znam --wrap _ZdlPv --wrap _ZdaPv --wrap _ZnwmRKSt9nothrow_t --wrap _ZnamRKSt9nothrow_t --wrap _ZdlPvRKSt9nothrow_t --wrap _ZdaPvRKSt9nothrow_t -Bdynamic --dll-search-prefix=cyg --tsaware -o cmTC_c4e30.exe /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/crt0.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtbegin.o -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0 -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../.. --enable-auto-import CMakeFiles/cmTC_c4e30.dir/CMakeCCompilerABI.c.o --out-implib libcmTC_c4e30.dll.a --major-image-version 0 --minor-image-version 0 -lgcc_s -lgcc -lcygwin -ladvapi32 -lshell32 -luser32 -lkernel32 -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/default-manifest.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtend.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7a1d9.exe' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/collect2.exe -plugin /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/cyglto_plugin.dll -plugin-opt=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe -plugin-opt=-fresolution=/tmp/cc8mX3NR.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lcygwin -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id -m i386pep --wrap _Znwm --wrap _Znam --wrap _ZdlPv --wrap _ZdaPv --wrap _ZnwmRKSt9nothrow_t --wrap _ZnamRKSt9nothrow_t --wrap _ZdlPvRKSt9nothrow_t --wrap _ZdaPvRKSt9nothrow_t -Bdynamic --dll-search-prefix=cyg --tsaware -o cmTC_7a1d9.exe /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/crt0.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtbegin.o -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0 -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../.. --enable-auto-import CMakeFiles/cmTC_7a1d9.dir/CMakeCCompilerABI.c.o --out-implib libcmTC_7a1d9.dll.a --major-image-version 0 --minor-image-version 0 -lgcc_s -lgcc -lcygwin -ladvapi32 -lshell32 -luser32 -lkernel32 -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/default-manifest.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtend.o
 make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 
 
@@ -68,14 +68,14 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld\.exe|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make.exe" "cmTC_c4e30/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_c4e30.dir/build.make CMakeFiles/cmTC_c4e30.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/make.exe" "cmTC_7a1d9/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_7a1d9.dir/build.make CMakeFiles/cmTC_7a1d9.dir/build]
   ignore line: [make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”]
-  ignore line: [Building C object CMakeFiles/cmTC_c4e30.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc     -o CMakeFiles/cmTC_c4e30.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.6.2/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_c4e30.exe]
-  ignore line: [/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_c4e30.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc     -Wl,--enable-auto-import -v CMakeFiles/cmTC_c4e30.dir/CMakeCCompilerABI.c.o  -o cmTC_c4e30.exe -Wl,--out-implib,libcmTC_c4e30.dll.a -Wl,--major-image-version,0,--minor-image-version,0   ]
+  ignore line: [Building C object CMakeFiles/cmTC_7a1d9.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc     -o CMakeFiles/cmTC_7a1d9.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.6.2/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_7a1d9.exe]
+  ignore line: [/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_7a1d9.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc     -Wl,--enable-auto-import -v CMakeFiles/cmTC_7a1d9.dir/CMakeCCompilerABI.c.o  -o cmTC_7a1d9.exe -Wl,--out-implib,libcmTC_7a1d9.dll.a -Wl,--major-image-version,0,--minor-image-version,0   ]
   ignore line: [使用内建 specs。]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe]
@@ -85,13 +85,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc 版本 5.4.0 (GCC) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/bin/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c4e30.exe' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/collect2.exe -plugin /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/cyglto_plugin.dll -plugin-opt=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe -plugin-opt=-fresolution=/tmp/ccqbX2cH.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lcygwin -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id -m i386pep --wrap _Znwm --wrap _Znam --wrap _ZdlPv --wrap _ZdaPv --wrap _ZnwmRKSt9nothrow_t --wrap _ZnamRKSt9nothrow_t --wrap _ZdlPvRKSt9nothrow_t --wrap _ZdaPvRKSt9nothrow_t -Bdynamic --dll-search-prefix=cyg --tsaware -o cmTC_c4e30.exe /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/crt0.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtbegin.o -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0 -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../.. --enable-auto-import CMakeFiles/cmTC_c4e30.dir/CMakeCCompilerABI.c.o --out-implib libcmTC_c4e30.dll.a --major-image-version 0 --minor-image-version 0 -lgcc_s -lgcc -lcygwin -ladvapi32 -lshell32 -luser32 -lkernel32 -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/default-manifest.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtend.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7a1d9.exe' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/collect2.exe -plugin /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/cyglto_plugin.dll -plugin-opt=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe -plugin-opt=-fresolution=/tmp/cc8mX3NR.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lcygwin -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id -m i386pep --wrap _Znwm --wrap _Znam --wrap _ZdlPv --wrap _ZdaPv --wrap _ZnwmRKSt9nothrow_t --wrap _ZnamRKSt9nothrow_t --wrap _ZdlPvRKSt9nothrow_t --wrap _ZdaPvRKSt9nothrow_t -Bdynamic --dll-search-prefix=cyg --tsaware -o cmTC_7a1d9.exe /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/crt0.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtbegin.o -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0 -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../.. --enable-auto-import CMakeFiles/cmTC_7a1d9.dir/CMakeCCompilerABI.c.o --out-implib libcmTC_7a1d9.dll.a --major-image-version 0 --minor-image-version 0 -lgcc_s -lgcc -lcygwin -ladvapi32 -lshell32 -luser32 -lkernel32 -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/default-manifest.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtend.o]
     arg [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/collect2.exe] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/cyglto_plugin.dll] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccqbX2cH.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cc8mX3NR.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lcygwin] ==> ignore
@@ -124,7 +124,7 @@ Parsed C implicit link information from above output:
     arg [--dll-search-prefix=cyg] ==> ignore
     arg [--tsaware] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_c4e30.exe] ==> ignore
+    arg [cmTC_7a1d9.exe] ==> ignore
     arg [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/crt0.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtbegin.o] ==> ignore
     arg [-L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0] ==> dir [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0]
@@ -135,9 +135,9 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib] ==> dir [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib]
     arg [-L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../..]
     arg [--enable-auto-import] ==> ignore
-    arg [CMakeFiles/cmTC_c4e30.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_7a1d9.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [--out-implib] ==> ignore
-    arg [libcmTC_c4e30.dll.a] ==> ignore
+    arg [libcmTC_7a1d9.dll.a] ==> ignore
     arg [--major-image-version] ==> ignore
     arg [0] ==> ignore
     arg [--minor-image-version] ==> ignore
@@ -174,14 +174,14 @@ Parsed C implicit link information from above output:
 Detecting C [-std=c11] compiler features compiled with the following output:
 Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make.exe" "cmTC_8e4af/fast"
-/usr/bin/make -f CMakeFiles/cmTC_8e4af.dir/build.make CMakeFiles/cmTC_8e4af.dir/build
+Run Build Command:"/usr/bin/make.exe" "cmTC_d5a57/fast"
+/usr/bin/make -f CMakeFiles/cmTC_d5a57.dir/build.make CMakeFiles/cmTC_d5a57.dir/build
 make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
-Building C object CMakeFiles/cmTC_8e4af.dir/feature_tests.c.o
-/usr/bin/cc    -std=c11 -o CMakeFiles/cmTC_8e4af.dir/feature_tests.c.o   -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_8e4af.exe
-/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_8e4af.dir/link.txt --verbose=1
-/usr/bin/cc     -Wl,--enable-auto-import  CMakeFiles/cmTC_8e4af.dir/feature_tests.c.o  -o cmTC_8e4af.exe -Wl,--out-implib,libcmTC_8e4af.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
+Building C object CMakeFiles/cmTC_d5a57.dir/feature_tests.c.o
+/usr/bin/cc    -std=c11 -o CMakeFiles/cmTC_d5a57.dir/feature_tests.c.o   -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_d5a57.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_d5a57.dir/link.txt --verbose=1
+/usr/bin/cc     -Wl,--enable-auto-import  CMakeFiles/cmTC_d5a57.dir/feature_tests.c.o  -o cmTC_d5a57.exe -Wl,--out-implib,libcmTC_d5a57.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
 make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 
 
@@ -194,14 +194,14 @@ make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 Detecting C [-std=c99] compiler features compiled with the following output:
 Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make.exe" "cmTC_f40a0/fast"
-/usr/bin/make -f CMakeFiles/cmTC_f40a0.dir/build.make CMakeFiles/cmTC_f40a0.dir/build
+Run Build Command:"/usr/bin/make.exe" "cmTC_711b8/fast"
+/usr/bin/make -f CMakeFiles/cmTC_711b8.dir/build.make CMakeFiles/cmTC_711b8.dir/build
 make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
-Building C object CMakeFiles/cmTC_f40a0.dir/feature_tests.c.o
-/usr/bin/cc    -std=c99 -o CMakeFiles/cmTC_f40a0.dir/feature_tests.c.o   -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_f40a0.exe
-/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_f40a0.dir/link.txt --verbose=1
-/usr/bin/cc     -Wl,--enable-auto-import  CMakeFiles/cmTC_f40a0.dir/feature_tests.c.o  -o cmTC_f40a0.exe -Wl,--out-implib,libcmTC_f40a0.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
+Building C object CMakeFiles/cmTC_711b8.dir/feature_tests.c.o
+/usr/bin/cc    -std=c99 -o CMakeFiles/cmTC_711b8.dir/feature_tests.c.o   -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_711b8.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_711b8.dir/link.txt --verbose=1
+/usr/bin/cc     -Wl,--enable-auto-import  CMakeFiles/cmTC_711b8.dir/feature_tests.c.o  -o cmTC_711b8.exe -Wl,--out-implib,libcmTC_711b8.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
 make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 
 
@@ -214,14 +214,14 @@ make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 Detecting C [-std=c90] compiler features compiled with the following output:
 Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make.exe" "cmTC_aa80a/fast"
-/usr/bin/make -f CMakeFiles/cmTC_aa80a.dir/build.make CMakeFiles/cmTC_aa80a.dir/build
+Run Build Command:"/usr/bin/make.exe" "cmTC_1c39c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_1c39c.dir/build.make CMakeFiles/cmTC_1c39c.dir/build
 make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
-Building C object CMakeFiles/cmTC_aa80a.dir/feature_tests.c.o
-/usr/bin/cc    -std=c90 -o CMakeFiles/cmTC_aa80a.dir/feature_tests.c.o   -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_aa80a.exe
-/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_aa80a.dir/link.txt --verbose=1
-/usr/bin/cc     -Wl,--enable-auto-import  CMakeFiles/cmTC_aa80a.dir/feature_tests.c.o  -o cmTC_aa80a.exe -Wl,--out-implib,libcmTC_aa80a.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
+Building C object CMakeFiles/cmTC_1c39c.dir/feature_tests.c.o
+/usr/bin/cc    -std=c90 -o CMakeFiles/cmTC_1c39c.dir/feature_tests.c.o   -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_1c39c.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_1c39c.dir/link.txt --verbose=1
+/usr/bin/cc     -Wl,--enable-auto-import  CMakeFiles/cmTC_1c39c.dir/feature_tests.c.o  -o cmTC_1c39c.exe -Wl,--out-implib,libcmTC_1c39c.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
 make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 
 
@@ -232,28 +232,28 @@ make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make.exe" "cmTC_5322b/fast"
-/usr/bin/make -f CMakeFiles/cmTC_5322b.dir/build.make CMakeFiles/cmTC_5322b.dir/build
+Run Build Command:"/usr/bin/make.exe" "cmTC_9d7cf/fast"
+/usr/bin/make -f CMakeFiles/cmTC_9d7cf.dir/build.make CMakeFiles/cmTC_9d7cf.dir/build
 make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
-Building CXX object CMakeFiles/cmTC_5322b.dir/testCXXCompiler.cxx.o
-/usr/bin/c++.exe      -o CMakeFiles/cmTC_5322b.dir/testCXXCompiler.cxx.o -c /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_5322b.exe
-/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_5322b.dir/link.txt --verbose=1
-/usr/bin/c++.exe     -Wl,--enable-auto-import  CMakeFiles/cmTC_5322b.dir/testCXXCompiler.cxx.o  -o cmTC_5322b.exe -Wl,--out-implib,libcmTC_5322b.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
+Building CXX object CMakeFiles/cmTC_9d7cf.dir/testCXXCompiler.cxx.o
+/usr/bin/c++.exe      -o CMakeFiles/cmTC_9d7cf.dir/testCXXCompiler.cxx.o -c /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_9d7cf.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_9d7cf.dir/link.txt --verbose=1
+/usr/bin/c++.exe     -Wl,--enable-auto-import  CMakeFiles/cmTC_9d7cf.dir/testCXXCompiler.cxx.o  -o cmTC_9d7cf.exe -Wl,--out-implib,libcmTC_9d7cf.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
 make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make.exe" "cmTC_8c435/fast"
-/usr/bin/make -f CMakeFiles/cmTC_8c435.dir/build.make CMakeFiles/cmTC_8c435.dir/build
+Run Build Command:"/usr/bin/make.exe" "cmTC_bdfab/fast"
+/usr/bin/make -f CMakeFiles/cmTC_bdfab.dir/build.make CMakeFiles/cmTC_bdfab.dir/build
 make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
-Building CXX object CMakeFiles/cmTC_8c435.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++.exe      -o CMakeFiles/cmTC_8c435.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.6.2/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_8c435.exe
-/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_8c435.dir/link.txt --verbose=1
-/usr/bin/c++.exe     -Wl,--enable-auto-import -v CMakeFiles/cmTC_8c435.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_8c435.exe -Wl,--out-implib,libcmTC_8c435.dll.a -Wl,--major-image-version,0,--minor-image-version,0   
+Building CXX object CMakeFiles/cmTC_bdfab.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++.exe      -o CMakeFiles/cmTC_bdfab.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.6.2/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_bdfab.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_bdfab.dir/link.txt --verbose=1
+/usr/bin/c++.exe     -Wl,--enable-auto-import -v CMakeFiles/cmTC_bdfab.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_bdfab.exe -Wl,--out-implib,libcmTC_bdfab.dll.a -Wl,--major-image-version,0,--minor-image-version,0   
 使用内建 specs。
 COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe
@@ -263,8 +263,8 @@ COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe
 gcc 版本 5.4.0 (GCC) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/bin/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8c435.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/collect2.exe -plugin /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/cyglto_plugin.dll -plugin-opt=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe -plugin-opt=-fresolution=/tmp/ccNMhiBd.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lcygwin -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id -m i386pep --wrap _Znwm --wrap _Znam --wrap _ZdlPv --wrap _ZdaPv --wrap _ZnwmRKSt9nothrow_t --wrap _ZnamRKSt9nothrow_t --wrap _ZdlPvRKSt9nothrow_t --wrap _ZdaPvRKSt9nothrow_t -Bdynamic --dll-search-prefix=cyg --tsaware -o cmTC_8c435.exe /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/crt0.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtbegin.o -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0 -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../.. --enable-auto-import CMakeFiles/cmTC_8c435.dir/CMakeCXXCompilerABI.cpp.o --out-implib libcmTC_8c435.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lgcc_s -lgcc -lcygwin -ladvapi32 -lshell32 -luser32 -lkernel32 -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/default-manifest.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtend.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_bdfab.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/collect2.exe -plugin /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/cyglto_plugin.dll -plugin-opt=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe -plugin-opt=-fresolution=/tmp/cccoUeXy.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lcygwin -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id -m i386pep --wrap _Znwm --wrap _Znam --wrap _ZdlPv --wrap _ZdaPv --wrap _ZnwmRKSt9nothrow_t --wrap _ZnamRKSt9nothrow_t --wrap _ZdlPvRKSt9nothrow_t --wrap _ZdaPvRKSt9nothrow_t -Bdynamic --dll-search-prefix=cyg --tsaware -o cmTC_bdfab.exe /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/crt0.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtbegin.o -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0 -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../.. --enable-auto-import CMakeFiles/cmTC_bdfab.dir/CMakeCXXCompilerABI.cpp.o --out-implib libcmTC_bdfab.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lgcc_s -lgcc -lcygwin -ladvapi32 -lshell32 -luser32 -lkernel32 -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/default-manifest.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtend.o
 make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 
 
@@ -272,14 +272,14 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld\.exe|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make.exe" "cmTC_8c435/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_8c435.dir/build.make CMakeFiles/cmTC_8c435.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/make.exe" "cmTC_bdfab/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_bdfab.dir/build.make CMakeFiles/cmTC_bdfab.dir/build]
   ignore line: [make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”]
-  ignore line: [Building CXX object CMakeFiles/cmTC_8c435.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++.exe      -o CMakeFiles/cmTC_8c435.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.6.2/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_8c435.exe]
-  ignore line: [/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_8c435.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++.exe     -Wl,--enable-auto-import -v CMakeFiles/cmTC_8c435.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_8c435.exe -Wl,--out-implib,libcmTC_8c435.dll.a -Wl,--major-image-version,0,--minor-image-version,0   ]
+  ignore line: [Building CXX object CMakeFiles/cmTC_bdfab.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++.exe      -o CMakeFiles/cmTC_bdfab.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.6.2/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_bdfab.exe]
+  ignore line: [/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_bdfab.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++.exe     -Wl,--enable-auto-import -v CMakeFiles/cmTC_bdfab.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_bdfab.exe -Wl,--out-implib,libcmTC_bdfab.dll.a -Wl,--major-image-version,0,--minor-image-version,0   ]
   ignore line: [使用内建 specs。]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe]
@@ -289,13 +289,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc 版本 5.4.0 (GCC) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/bin/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/:/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8c435.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/collect2.exe -plugin /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/cyglto_plugin.dll -plugin-opt=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe -plugin-opt=-fresolution=/tmp/ccNMhiBd.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lcygwin -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id -m i386pep --wrap _Znwm --wrap _Znam --wrap _ZdlPv --wrap _ZdaPv --wrap _ZnwmRKSt9nothrow_t --wrap _ZnamRKSt9nothrow_t --wrap _ZdlPvRKSt9nothrow_t --wrap _ZdaPvRKSt9nothrow_t -Bdynamic --dll-search-prefix=cyg --tsaware -o cmTC_8c435.exe /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/crt0.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtbegin.o -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0 -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../.. --enable-auto-import CMakeFiles/cmTC_8c435.dir/CMakeCXXCompilerABI.cpp.o --out-implib libcmTC_8c435.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lgcc_s -lgcc -lcygwin -ladvapi32 -lshell32 -luser32 -lkernel32 -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/default-manifest.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtend.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_bdfab.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/collect2.exe -plugin /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/cyglto_plugin.dll -plugin-opt=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe -plugin-opt=-fresolution=/tmp/cccoUeXy.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lcygwin -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id -m i386pep --wrap _Znwm --wrap _Znam --wrap _ZdlPv --wrap _ZdaPv --wrap _ZnwmRKSt9nothrow_t --wrap _ZnamRKSt9nothrow_t --wrap _ZdlPvRKSt9nothrow_t --wrap _ZdaPvRKSt9nothrow_t -Bdynamic --dll-search-prefix=cyg --tsaware -o cmTC_bdfab.exe /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/crt0.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtbegin.o -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0 -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib -L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../.. --enable-auto-import CMakeFiles/cmTC_bdfab.dir/CMakeCXXCompilerABI.cpp.o --out-implib libcmTC_bdfab.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lgcc_s -lgcc -lcygwin -ladvapi32 -lshell32 -luser32 -lkernel32 -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/default-manifest.o /usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtend.o]
     arg [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/collect2.exe] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/cyglto_plugin.dll] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/lto-wrapper.exe] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccNMhiBd.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cccoUeXy.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lcygwin] ==> ignore
@@ -328,7 +328,7 @@ Parsed CXX implicit link information from above output:
     arg [--dll-search-prefix=cyg] ==> ignore
     arg [--tsaware] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_8c435.exe] ==> ignore
+    arg [cmTC_bdfab.exe] ==> ignore
     arg [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/crt0.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/crtbegin.o] ==> ignore
     arg [-L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0] ==> dir [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0]
@@ -339,9 +339,9 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib] ==> dir [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../x86_64-pc-cygwin/lib]
     arg [-L/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../..]
     arg [--enable-auto-import] ==> ignore
-    arg [CMakeFiles/cmTC_8c435.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_bdfab.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [--out-implib] ==> ignore
-    arg [libcmTC_8c435.dll.a] ==> ignore
+    arg [libcmTC_bdfab.dll.a] ==> ignore
     arg [--major-image-version] ==> ignore
     arg [0] ==> ignore
     arg [--minor-image-version] ==> ignore
@@ -379,14 +379,14 @@ Parsed CXX implicit link information from above output:
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
 Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make.exe" "cmTC_e59f1/fast"
-/usr/bin/make -f CMakeFiles/cmTC_e59f1.dir/build.make CMakeFiles/cmTC_e59f1.dir/build
+Run Build Command:"/usr/bin/make.exe" "cmTC_47b84/fast"
+/usr/bin/make -f CMakeFiles/cmTC_47b84.dir/build.make CMakeFiles/cmTC_47b84.dir/build
 make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
-Building CXX object CMakeFiles/cmTC_e59f1.dir/feature_tests.cxx.o
-/usr/bin/c++.exe     -std=c++14 -o CMakeFiles/cmTC_e59f1.dir/feature_tests.cxx.o -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_e59f1.exe
-/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_e59f1.dir/link.txt --verbose=1
-/usr/bin/c++.exe     -Wl,--enable-auto-import  CMakeFiles/cmTC_e59f1.dir/feature_tests.cxx.o  -o cmTC_e59f1.exe -Wl,--out-implib,libcmTC_e59f1.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
+Building CXX object CMakeFiles/cmTC_47b84.dir/feature_tests.cxx.o
+/usr/bin/c++.exe     -std=c++14 -o CMakeFiles/cmTC_47b84.dir/feature_tests.cxx.o -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_47b84.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_47b84.dir/link.txt --verbose=1
+/usr/bin/c++.exe     -Wl,--enable-auto-import  CMakeFiles/cmTC_47b84.dir/feature_tests.cxx.o  -o cmTC_47b84.exe -Wl,--out-implib,libcmTC_47b84.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
 make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 
 
@@ -452,14 +452,14 @@ make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
 Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make.exe" "cmTC_2774e/fast"
-/usr/bin/make -f CMakeFiles/cmTC_2774e.dir/build.make CMakeFiles/cmTC_2774e.dir/build
+Run Build Command:"/usr/bin/make.exe" "cmTC_5c621/fast"
+/usr/bin/make -f CMakeFiles/cmTC_5c621.dir/build.make CMakeFiles/cmTC_5c621.dir/build
 make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
-Building CXX object CMakeFiles/cmTC_2774e.dir/feature_tests.cxx.o
-/usr/bin/c++.exe     -std=c++11 -o CMakeFiles/cmTC_2774e.dir/feature_tests.cxx.o -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_2774e.exe
-/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_2774e.dir/link.txt --verbose=1
-/usr/bin/c++.exe     -Wl,--enable-auto-import  CMakeFiles/cmTC_2774e.dir/feature_tests.cxx.o  -o cmTC_2774e.exe -Wl,--out-implib,libcmTC_2774e.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
+Building CXX object CMakeFiles/cmTC_5c621.dir/feature_tests.cxx.o
+/usr/bin/c++.exe     -std=c++11 -o CMakeFiles/cmTC_5c621.dir/feature_tests.cxx.o -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_5c621.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_5c621.dir/link.txt --verbose=1
+/usr/bin/c++.exe     -Wl,--enable-auto-import  CMakeFiles/cmTC_5c621.dir/feature_tests.cxx.o  -o cmTC_5c621.exe -Wl,--out-implib,libcmTC_5c621.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
 make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 
 
@@ -525,14 +525,14 @@ make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
 Change Dir: /home/game/SDK-gcc/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make.exe" "cmTC_5a7a9/fast"
-/usr/bin/make -f CMakeFiles/cmTC_5a7a9.dir/build.make CMakeFiles/cmTC_5a7a9.dir/build
+Run Build Command:"/usr/bin/make.exe" "cmTC_5b1e4/fast"
+/usr/bin/make -f CMakeFiles/cmTC_5b1e4.dir/build.make CMakeFiles/cmTC_5b1e4.dir/build
 make[1]: 进入目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
-Building CXX object CMakeFiles/cmTC_5a7a9.dir/feature_tests.cxx.o
-/usr/bin/c++.exe     -std=c++98 -o CMakeFiles/cmTC_5a7a9.dir/feature_tests.cxx.o -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_5a7a9.exe
-/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_5a7a9.dir/link.txt --verbose=1
-/usr/bin/c++.exe     -Wl,--enable-auto-import  CMakeFiles/cmTC_5a7a9.dir/feature_tests.cxx.o  -o cmTC_5a7a9.exe -Wl,--out-implib,libcmTC_5a7a9.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
+Building CXX object CMakeFiles/cmTC_5b1e4.dir/feature_tests.cxx.o
+/usr/bin/c++.exe     -std=c++98 -o CMakeFiles/cmTC_5b1e4.dir/feature_tests.cxx.o -c /home/game/SDK-gcc/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_5b1e4.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_5b1e4.dir/link.txt --verbose=1
+/usr/bin/c++.exe     -Wl,--enable-auto-import  CMakeFiles/cmTC_5b1e4.dir/feature_tests.cxx.o  -o cmTC_5b1e4.exe -Wl,--out-implib,libcmTC_5b1e4.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
 make[1]: 离开目录“/home/game/SDK-gcc/build/CMakeFiles/CMakeTmp”
 
 
