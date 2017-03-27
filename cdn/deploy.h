@@ -19,6 +19,7 @@ class NetworkNode;
 class ConsNode;
 class Flow;
 class EdgeMatrix;
+class Route;
 void deploy_server(char * graph[MAX_EDGE_NUM], int edge_num, char * filename);
 
 class NetworkInfo
@@ -44,6 +45,8 @@ public:
 	size_t getCostServer(){return costServer;}
 	size_t getMatrixCost(size_t i, size_t j){return costMatrix[i][j];}
 	int sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, ConsNode consNodeGroup[]);
+	int solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix);
+
 
 private:
 	size_t numNode;
@@ -122,6 +125,7 @@ public:
 	int saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, size_t end);
 	// int sapss(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, vector<size_t>& end);
 	size_t sapV(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t start, size_t end);
+	size_t sapsV(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, size_t end);
 	vector<Flow* >* getFlowLib(){return &flowLib;}
 	vector<pair<size_t,size_t> >* getFlowUsed(){return &flowUsed;}
 	int initMapEdgeRoute(size_t _numNode);
@@ -171,6 +175,7 @@ public:
 	int pushRoute(vector<size_t>* route);
 	int editCost(size_t _cost);
 	size_t getCost(){return cost;}
+	size_t getServerNum(){return serverNum;}
 	size_t costCal(NetworkInfo networkInfo);
 private:
 	vector<vector<size_t>* >routeG ;
