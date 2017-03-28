@@ -45,7 +45,7 @@ public:
 	size_t getCostServer(){return costServer;}
 	size_t getMatrixCost(size_t i, size_t j){return costMatrix[i][j];}
 	int sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, ConsNode consNodeGroup[]);
-	int solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix);
+	int solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,long int &indexConsOverLoad);
 
 
 private:

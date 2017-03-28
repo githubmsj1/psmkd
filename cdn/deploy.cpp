@@ -212,15 +212,67 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 		}
 
 		//solve the case
-		Route* routeOutput=NULL;
-		if(networkInfo.solve(networkNodeGroup,consNodeGroup,serverPos,routeOutput,globalEdgeMatrix)==0)
+		int state=0;
+		int quit=-1;
+		while(1)
 		{
-			routeSolution.push_back(routeOutput);
+			Route* routeOutput=NULL;
+			long int indexConsOverLoad=-1;
+			if(networkInfo.solve(networkNodeGroup,consNodeGroup,serverPos,routeOutput,globalEdgeMatrix,indexConsOverLoad)==0)
+			{
+
+				routeSolution.push_back(routeOutput);
+				state=0;
+			}
+			else
+			{
+				vector<size_t>::iterator itr1=find(serverPos.begin(),serverPos.end(),indexConsOverLoad);
+				if(itr1==serverPos.end())
+				{
+					serverPos[indexSwap%NUM_SERVER]=consNodeGroup[indexConsOverLoad].getToIndexNode();
+					indexSwap++;
+					state=1;
+					cout<<"indexConsOverLoad "<<consNodeGroup[indexConsOverLoad].getToIndexNode()<<endl;
+				}
+				else
+				{
+					cout<<"unknow error"<<endl;
+					quit=0;
+					break;
+				}
+
+				// int pause;
+				// cin>>pause;	
+			}
+
+			// int pause;
+			// cin>>pause;	
+			// cout<<"**************************************\n";
+			// cout<<"Solution cost: "<<routeSolution.back()->getCost()<<endl;
+			// cout<<"Server used: "<<routeSolution.back()->getServerNum()<<endl;
+			// cout<<"++++++++++++++++++++++++++++++++++++++\n";
+
+			if(state==0)
+				break;
+
+			endTime = clock();
+			double totalTime=(double)(endTime - startTimeTotal)/CLOCKS_PER_SEC;
+			startTime=endTime;
+			if(totalTime>30)
+				break;
+			
 		}
-		else
-		{
-			break;
-		}
+
+		endTime = clock();
+		double totalTime=(double)(endTime - startTimeTotal)/CLOCKS_PER_SEC;
+		startTime=endTime;
+		if(totalTime>30)
+			quit=0;
+
+		if(quit==0)break;
+
+
+
 //old solution
 
 		// //collect flow only for the node of front NUM_SERVER
@@ -951,20 +1003,24 @@ int NetworkInfo::sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, C
 	return 0;
 }
 
-int NetworkInfo::solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix)
+int NetworkInfo::solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,long int &indexConsOverLoad)
 {
 
 	//generate and select the flow
 	for(size_t k=0;k<this->getNumCons();k++)
 	{
 		consNodeGroup[k].saps(networkNodeGroup,*this,serverPos,consNodeGroup[k].getToIndexNode());
-		cout<<"select: "<<consNodeGroup[k].selectFlow()<<endl;
+		if(consNodeGroup[k].selectFlow()!=0)
+		{
+			cout<<"select: "<<-1<<endl;
+		}
+		
 	}
 
 	//test regulate
 	int bandWidthNormal=-1;
 	cout<<"**************************************\n";
-	for(size_t i=0;i<10;i++)
+	for(size_t i=0;i<3;i++)
 	{
 		vector<pair<size_t, size_t> > overLoadEdge;
 		vector<long int> overLoad;
@@ -972,6 +1028,7 @@ int NetworkInfo::solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],v
 		{
 			cout<<"No flow overload."<<endl;
 			bandWidthNormal=0;
+			indexConsOverLoad=-1;
 			break;
 		}
 		else
@@ -981,6 +1038,7 @@ int NetworkInfo::solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],v
 					if(consNodeGroup[j].regulate(overLoadEdge,overLoad)==0)
 					{	
 						cout<<"Regulation Done."<<endl;
+						indexConsOverLoad=j;
 						break;
 					}
 			}
@@ -1835,7 +1893,7 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 	//test whether the overload edge is in use
 	if(flowUsed.size()==0)
 	{
-		cout<<"No route is sat!"<<endl;
+		// cout<<"No route is sat!"<<endl;
 		return -1;
 	}
 
@@ -1852,11 +1910,11 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 	}
 	if(edgeInUsed==-1)
 	{
-		cout<<"Edge overload not in use"<<endl;
+		// cout<<"Edge overload not in use"<<endl;
 		return -1;
 	}
 
-	cout<<"**************************************\n";
+	// cout<<"**************************************\n";
 
 
 	vector<vector<int> >countUsed;
@@ -1883,32 +1941,32 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 	}
 
 
-	//show flowUsed
-	cout<<"flowUsed: \n";
-	for(size_t i=0;i<flowUsed.size();i++)
-	{
+	// //show flowUsed
+	// cout<<"flowUsed: \n";
+	// for(size_t i=0;i<flowUsed.size();i++)
+	// {
 
-		cout<<"["<<i<<"] ";
-		Flow *tmpflow=flowLib[flowUsed[i].first];
-		vector<pair<size_t,size_t>* > &path=*(tmpflow->getPath());
-		for(size_t j=0;j<path.size();j++)
-		{
-			cout<<path[j]->first<<" ";
-		}
-		cout<<"("<<flowUsed[i].second<<") <"<<flowLibRest[flowUsed[i].first]<<">"<<endl;
-	}
-	cout<<endl;
+	// 	cout<<"["<<i<<"] ";
+	// 	Flow *tmpflow=flowLib[flowUsed[i].first];
+	// 	vector<pair<size_t,size_t>* > &path=*(tmpflow->getPath());
+	// 	for(size_t j=0;j<path.size();j++)
+	// 	{
+	// 		cout<<path[j]->first<<" ";
+	// 	}
+	// 	cout<<"("<<flowUsed[i].second<<") <"<<flowLibRest[flowUsed[i].first]<<">"<<endl;
+	// }
+	// cout<<endl;
 	// cout<<"("<<overLoadEdge[0].first<<" "<<overLoadEdge[0].second<<" "<<overLoad[0]<<")"<<endl;
 
 
 
 	
-	cout<<"edge over flow before remove: \n";
-	for(size_t i=0;i<overLoadEdge.size();i++)
-	{
-		cout<<"("<<overLoadEdge[i].first<<","<<overLoadEdge[i].second<<"): "<<overLoad[i]<<endl;
-	}
-	cout<<endl;
+	// cout<<"edge over flow before remove: \n";
+	// for(size_t i=0;i<overLoadEdge.size();i++)
+	// {
+	// 	cout<<"("<<overLoadEdge[i].first<<","<<overLoadEdge[i].second<<"): "<<overLoad[i]<<endl;
+	// }
+	// cout<<endl;
 
 	for(size_t i=0;i<overLoadEdge.size();i++)
 	{
@@ -2031,7 +2089,7 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 			// 	minFlow=tmpFlow;
 		}
 
-		cout<<"maxFlow: "<<maxFlow<<endl;
+		// cout<<"maxFlow: "<<maxFlow<<endl;
 		for(size_t j=0;j<overLoad.size();j++)
 		{
 			if(countUsed[j][usedIndex[i]]==1)
@@ -2060,24 +2118,24 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 
 	}
 
-	cout<<"edge over flow after remove: \n";
-	for(size_t i=0;i<overLoadEdge.size();i++)
-	{
-		cout<<"("<<overLoadEdge[i].first<<","<<overLoadEdge[i].second<<"): "<<overLoadRest[i]<<endl;
-	}
-	cout<<endl;
+	// cout<<"edge over flow after remove: \n";
+	// for(size_t i=0;i<overLoadEdge.size();i++)
+	// {
+	// 	cout<<"("<<overLoadEdge[i].first<<","<<overLoadEdge[i].second<<"): "<<overLoadRest[i]<<endl;
+	// }
+	// cout<<endl;
 
 
-	cout<<"overload fixed: ";
-	if(overloadOrNot==-1)
-		cout<<"Yes";
-	else
-		cout<<"No";
-	cout<<endl;
+	// cout<<"overload fixed: ";
+	// if(overloadOrNot==-1)
+	// 	cout<<"Yes";
+	// else
+	// 	cout<<"No";
+	// cout<<endl;
 
-	cout<<"flow need to compensate: ";
-		cout<<minusFlow;
-	cout<<endl<<endl;
+	// cout<<"flow need to compensate: ";
+	// 	cout<<minusFlow;
+	// cout<<endl<<endl;
 
 	//add edge (can't guarantee the added edge is not the overload one, because the demand should be satisfied first)
 	for(size_t i=0;i<flowLib.size();i++)//tmpRest is not updated
@@ -2124,12 +2182,12 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 		
 	}
 
-	cout<<"edge over flow after add edge: \n";
-	for(size_t i=0;i<overLoadEdge.size();i++)
-	{
-		cout<<"("<<overLoadEdge[i].first<<","<<overLoadEdge[i].second<<"): "<<overLoadRest[i]<<endl;
-	}
-	cout<<endl;
+	// cout<<"edge over flow after add edge: \n";
+	// for(size_t i=0;i<overLoadEdge.size();i++)
+	// {
+	// 	cout<<"("<<overLoadEdge[i].first<<","<<overLoadEdge[i].second<<"): "<<overLoadRest[i]<<endl;
+	// }
+	// cout<<endl;
 
 	//update tmpRestFlow
 	for(size_t i=0;i<flowLib.size();i++)
@@ -2153,20 +2211,20 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 			itr++;
 	}
 
-	//show tmpFlowUsed
-	cout<<"tmpFlowUsed: \n";
-	for(size_t i=0;i<tmpFlowUsed.size();i++)
-	{
+	// //show tmpFlowUsed
+	// cout<<"tmpFlowUsed: \n";
+	// for(size_t i=0;i<tmpFlowUsed.size();i++)
+	// {
 
-		cout<<"["<<i<<"] ";
-		Flow *tmpflow=flowLib[tmpFlowUsed[i].first];
-		vector<pair<size_t,size_t>* > &path=*(tmpflow->getPath());
-		for(size_t j=0;j<path.size();j++)
-		{
-			cout<<path[j]->first<<" ";
-		}
-		cout<<"("<<tmpFlowUsed[i].second<<") <"<<tmpRestFlow[tmpFlowUsed[i].first]<<">"<<endl;
-	}
+	// 	cout<<"["<<i<<"] ";
+	// 	Flow *tmpflow=flowLib[tmpFlowUsed[i].first];
+	// 	vector<pair<size_t,size_t>* > &path=*(tmpflow->getPath());
+	// 	for(size_t j=0;j<path.size();j++)
+	// 	{
+	// 		cout<<path[j]->first<<" ";
+	// 	}
+	// 	cout<<"("<<tmpFlowUsed[i].second<<") <"<<tmpRestFlow[tmpFlowUsed[i].first]<<">"<<endl;
+	// }
 
 	//update flow used and rest
 	flowLibRest.clear();
@@ -2191,7 +2249,7 @@ int ConsNode::regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long 
 
 
 
-	cout<<"++++++++++++++++++++++++++++++++++++++\n";
+	// cout<<"++++++++++++++++++++++++++++++++++++++\n";
 	
 	//for those overload is negative, they don't regulation! Because the bandwidth is not used fully.
 	for(size_t i=0;i<overLoad.size();i++)
