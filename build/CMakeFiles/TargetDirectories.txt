@@ -1,3 +1,1 @@
-/home/game/SDK-gcc/build/CMakeFiles/edit_cache.dir
-/home/game/SDK-gcc/build/CMakeFiles/rebuild_cache.dir
-/home/game/SDK-gcc/build/CMakeFiles/cdn.dir
+/Users/msj/Desktop/HW/psmkd/build/CMakeFiles/cdn.dir

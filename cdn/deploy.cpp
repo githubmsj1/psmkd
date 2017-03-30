@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 
+
 // #define NUM_SERVER 30
 using namespace std;
 
@@ -108,10 +109,10 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 
 //-----------------------------------------------------------------------------------------------
 	//identify the number of server
-	size_t NUM_SERVER=(size_t)((double)networkInfo.getNumCons()*0.01);
+	size_t NUM_SERVER=(size_t)((double)networkInfo.getNumCons()*0.4);
 	cout<<"NUM_SERVER: "<<NUM_SERVER<<endl;
 
-
+	vector<size_t>oldServer;
 	for(;NUM_SERVER<networkInfo.getNumCons();NUM_SERVER++)
 	{
 		// sort client according to demand
@@ -187,35 +188,56 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 
 		//take out NUM_SERVER server (deploy server)
 		vector<size_t>serverPos;
-		for(size_t i=NUM_SERVER;i<consIndex.size();i++)
+
+		if(oldServer.size()!=0)
 		{
-			serverPos.push_back(consNodeGroup[consIndex[i]].getToIndexNode());
+			for(size_t i=NUM_SERVER;i<consIndex.size();i++)
+			{
+				serverPos.push_back(oldServer[i-NUM_SERVER]);
+			}
+			cout<<"high efficient"<<endl;
+		}
+		else
+		{
+			for(size_t i=NUM_SERVER;i<consIndex.size();i++)
+			{
+				serverPos.push_back(consNodeGroup[consIndex[i]].getToIndexNode());
+			}
 		}
 
+
+		for(size_t i=0;i<serverPos.size();i++)
+		{
+			cout<<serverPos[i]<<" ";
+		}
+		cout<<endl;
 
 		//test whether the node of low demand is available get from other server; 
 		size_t indexSwap=NUM_SERVER;	
-		for(size_t k=0;k<NUM_SERVER;k++)
-		{	
-			size_t indexK=consIndex[k];
-			size_t maxFlow=consNodeGroup[indexK].sapsV(networkNodeGroup,networkInfo,serverPos,consNodeGroup[indexK].getToIndexNode());
-			if(maxFlow<consNodeGroup[indexK].getDemand())
-			{
-				size_t tmp=consIndex[k];
-				consIndex[k]=consIndex[indexSwap];
-				consIndex[indexSwap]=tmp;
+		// for(size_t k=0;k<NUM_SERVER;k++)
+		// {	
+		// 	size_t indexK=consIndex[k];
+		// 	size_t maxFlow=consNodeGroup[indexK].sapsV(networkNodeGroup,networkInfo,serverPos,consNodeGroup[indexK].getToIndexNode());
+		// 	if(maxFlow<consNodeGroup[indexK].getDemand())
+		// 	{
+		// 		size_t tmp=consIndex[k];
+		// 		consIndex[k]=consIndex[indexSwap];
+		// 		consIndex[indexSwap]=tmp;
 
-				serverPos[indexSwap-NUM_SERVER]=consNodeGroup[consIndex[indexSwap]].getToIndexNode();
-				indexSwap++;
-			}
+		// 		serverPos[indexSwap-NUM_SERVER]=consNodeGroup[consIndex[indexSwap]].getToIndexNode();
+		// 		indexSwap++;
+		// 	}
 
-		}
-
+		// }
+		
 		//solve the case
 		int state=0;
 		int quit=-1;
+		cout<<"INFO:  "<<NUM_SERVER<<" "<<networkInfo.getNumCons()<<endl;
 		while(1)
 		{
+				
+			
 			Route* routeOutput=NULL;
 			long int indexConsOverLoad=-1;
 			if(networkInfo.solve(networkNodeGroup,consNodeGroup,serverPos,routeOutput,globalEdgeMatrix,indexConsOverLoad)==0)
@@ -226,24 +248,31 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 			}
 			else
 			{
-				vector<size_t>::iterator itr1=find(serverPos.begin(),serverPos.end(),indexConsOverLoad);
+				
+				// cout<<networkInfo.getNumCons()<<" "<<NUM_SERVER<<endl;
+				vector<size_t>::iterator itr1=find(serverPos.begin(),serverPos.end(),consNodeGroup[indexConsOverLoad].getToIndexNode());
 				if(itr1==serverPos.end())
 				{
-					serverPos[indexSwap%NUM_SERVER]=consNodeGroup[indexConsOverLoad].getToIndexNode();
+					// cout<<"check:"<<serverPos.size()<<" "<<(indexSwap-NUM_SERVER)%serverPos.size()<<endl;
+					size_t indexSever=(indexSwap-NUM_SERVER)%serverPos.size();
+		
+					serverPos[indexSever]=consNodeGroup[indexConsOverLoad].getToIndexNode();
 					indexSwap++;
 					state=1;
-					cout<<"indexConsOverLoad "<<consNodeGroup[indexConsOverLoad].getToIndexNode()<<endl;
+
+					cout<<"indexServerOverLoad "<<consNodeGroup[indexConsOverLoad].getToIndexNode()<<endl;
 				}
 				else
 				{
 					cout<<"unknow error"<<endl;
-					quit=0;
-					break;
+					// quit=0;
+					 break;
 				}
 
 				// int pause;
 				// cin>>pause;	
-			}
+				
+			}	
 
 			// int pause;
 			// cin>>pause;	
@@ -258,20 +287,23 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 			endTime = clock();
 			double totalTime=(double)(endTime - startTimeTotal)/CLOCKS_PER_SEC;
 			startTime=endTime;
-			if(totalTime>30)
+			if(totalTime>70)
 				break;
-			
+				
 		}
+
 
 		endTime = clock();
 		double totalTime=(double)(endTime - startTimeTotal)/CLOCKS_PER_SEC;
 		startTime=endTime;
-		if(totalTime>30)
+		if(totalTime>70)
 			quit=0;
 
 		if(quit==0)break;
 
-
+		
+		oldServer.clear();
+		oldServer=serverPos;
 
 //old solution
 
@@ -297,7 +329,7 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 		// // 	for(size_t i=0;i<overLoadEdge.size();i++)
 		// // 	{
 		// // 		cout<<"("<<overLoadEdge[i].first<<","<<overLoadEdge[i].second<<"): "<<overLoad[i]<<endl;
-		// // 	} 
+		// // 	} 	
 		// // }
 		// // else
 		// // {
@@ -1005,50 +1037,72 @@ int NetworkInfo::sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, C
 
 int NetworkInfo::solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,long int &indexConsOverLoad)
 {
-
+			
 	//generate and select the flow
+	int demandSatisfied=0;
 	for(size_t k=0;k<this->getNumCons();k++)
 	{
+		// cout<<"Q1 "<<k<<endl;
 		consNodeGroup[k].saps(networkNodeGroup,*this,serverPos,consNodeGroup[k].getToIndexNode());
 		if(consNodeGroup[k].selectFlow()!=0)
 		{
-			cout<<"select: "<<-1<<endl;
+			// cout<<"select: "<<-1<<endl;//can't satifiy the demand
+			demandSatisfied=-1;
+			indexConsOverLoad=k;
 		}
-		
+		// cout<<"Q2"<<endl;
+
 	}
 
+	if(demandSatisfied==-1)
+	{
+		for(size_t i=0;i<this->getNumCons();i++)
+		{
+			consNodeGroup[i].clearRoute();
+		}
+		// cout<<"demand not satisied!!!"<<endl;
+		return -1;
+
+	}
+	
 	//test regulate
 	int bandWidthNormal=-1;
-	cout<<"**************************************\n";
+	// cout<<"**************************************\n";
 	for(size_t i=0;i<3;i++)
 	{
 		vector<pair<size_t, size_t> > overLoadEdge;
 		vector<long int> overLoad;
+		
+
 		if(globalEdgeMatrix.checkCons(consNodeGroup,*this,overLoadEdge,overLoad)==0)
 		{
-			cout<<"No flow overload."<<endl;
+			// cout<<"No flow overload."<<endl;
 			bandWidthNormal=0;
 			indexConsOverLoad=-1;
 			break;
 		}
 		else
 		{
+			indexConsOverLoad=this->getNumCons()-1;	
 			for(size_t j=0;j<this->getNumCons();j++)
 			{
 					if(consNodeGroup[j].regulate(overLoadEdge,overLoad)==0)
 					{	
-						cout<<"Regulation Done."<<endl;
+						// cout<<"Regulation Done."<<endl;
 						indexConsOverLoad=j;
 						break;
 					}
+
 			}
+			
 		}
-		cout<<"Regulate: "<<i<<endl;
+		// cout<<"Regulate: "<<i<<endl;
 		// cout<<"after regulation\n";
 		// for(size_t j=0;j<overLoadEdge.size();j++)
 		// {
 		// 	cout<<"("<<overLoadEdge[j].first<<","<<overLoadEdge[j].second<<"): "<<overLoad[j]<<endl;
 		// }
+
 	}
 
 	//output the solution
@@ -1088,6 +1142,7 @@ int NetworkInfo::solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],v
 	{
 		consNodeGroup[i].clearRoute();
 	}
+	
 
 	return bandWidthNormal;
 }
@@ -1511,6 +1566,8 @@ size_t ConsNode::sapV(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,si
 
 int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& _start, size_t end)
 {
+
+
 	//if the start point include end
 	for(size_t i=0;i<_start.size();i++)
 	{
@@ -1532,7 +1589,8 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 		}
 
 	}
-
+		// cout<<"P1----------------"<<endl;
+		
 	//copy tmp networkNodeGroup
 	vector<NetworkNode> networkNodeGroup;
 	for (size_t i=0;i<networkInfo.getNumNode();i++)
@@ -1548,7 +1606,7 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 	// {
 	// 	cout<<_start[i]<<" ";
 	// }
-	cout<<endl;
+	// cout<<endl;
 	for(size_t i=0;i<_start.size();i++)
 	{	
 		//ToIndexNode BandWidth CostUnit
@@ -1585,6 +1643,7 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 	numh[0]=numNode;
 	u=start;
 
+	
 	// cout<<"augment route: "<<endl;
 	while(h[start]<numNode)
 	{
@@ -1687,7 +1746,7 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 		}
 
 	}
-
+// cout<<"P12----------------"<<endl;
 	//delete tmp networkNodeGroup
 
 	//sort flowlib according to distance
@@ -1709,6 +1768,7 @@ int ConsNode::saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vecto
 		}
 	}
 
+	// cout<<"P2----------------"<<endl;
 	//update rest flow
 	if(flowLibRest.size()!=0)
 		flowLibRest.clear();
@@ -1737,7 +1797,7 @@ size_t ConsNode::sapsV(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,v
 	// {
 	// 	cout<<_start[i]<<" ";
 	// }
-	cout<<endl;
+	// cout<<endl;
 	for(size_t i=0;i<_start.size();i++)
 	{	
 		//ToIndexNode BandWidth CostUnit
@@ -2368,7 +2428,12 @@ int ConsNode::selectFlow()
 	// cout<<"demand "<<demand<<"bandWidth "<<bandWidth<<endl;
 	if(bandWidth!=demand)
 	{
-		flowUsed.clear();
+		if(flowUsed.size()!=0)
+			flowUsed.clear();
+		for(size_t i=0;i<flowLib.size();i++)
+		{
+			flowLibRest[i]=flowLib[i]->getRestFlow();
+		}
 		satisfied=-1;
 	}
 	// else
