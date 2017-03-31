@@ -46,7 +46,9 @@ public:
 	size_t getMatrixCost(size_t i, size_t j){return costMatrix[i][j];}
 	int sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, ConsNode consNodeGroup[]);
 	int solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,long int &indexConsOverLoad);
-
+	int mapServerToCons(ConsNode consNodeGroup[]);
+	int deployServer(ConsNode consNodeGroup[], vector<size_t>&serverPos);
+	int constructServerPool(NetworkNode networkNodeGroup[], ConsNode consNodeGroup[]);
 
 private:
 	size_t numNode;
@@ -56,6 +58,10 @@ private:
 	size_t costServer;
 	char** topo;
 	vector<vector<size_t> >costMatrix;
+	vector<int>consDeployFlag;
+	map<size_t,vector<size_t> >serverToCons;
+
+
 
 };
 	
@@ -123,6 +129,7 @@ public:
 	size_t getNumFlow(){return flowUsed.size();}
 	int sap(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t start, size_t end);
 	int saps(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, size_t end);
+	int spfa(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, size_t end);
 	// int sapss(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, vector<size_t>& end);
 	size_t sapV(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,size_t start, size_t end);
 	size_t sapsV(NetworkNode _networkNodeGroup[],NetworkInfo networkInfo,vector<size_t>& start, size_t end);
@@ -131,7 +138,7 @@ public:
 	int initMapEdgeRoute(size_t _numNode);
 	int initCons(NetworkInfo networkInfo);
 	int selectFlow();
-	int regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long int>& overLoad);
+	int regulate(vector<pair<size_t, size_t> >& overLoadEdge, vector<long int>& overLoad,int &regulated);
 	int popRoute(size_t index, vector<size_t>* route);
 	// int editFlow(long int deltaFlow){totalFlow+=deltaFlow;}
 	int sortFlow();
@@ -145,6 +152,10 @@ public:
 	long int getEdgeLoad(pair<size_t, size_t>);
 	int clearRoute();
 	size_t getTotalRestFlow(){return totalFlow-demand;};
+	int constructServerPool();
+	size_t getServerPoolSize(){return serverPool.size();}
+	size_t getServerPoolServer(size_t index){return serverPool[index];};
+
 private:
 	size_t toIndexNode;
 	size_t demand;
@@ -160,6 +171,8 @@ private:
 	vector<size_t> sortIndexRestFlow;
 	map<pair<size_t, size_t>,vector<size_t>>mapEdgeRoute;
 	size_t totalFlow;
+	map<size_t,size_t>serverFlow;//networkNode index, flow
+	vector<size_t>serverPool;
 	// size_t indexMaxRestFlow;
 	// long int maxRestFlow;
 };
@@ -177,10 +190,12 @@ public:
 	size_t getCost(){return cost;}
 	size_t getServerNum(){return serverNum;}
 	size_t costCal(NetworkInfo networkInfo);
+	int serverUsedCal(vector<size_t>& serverPos);
 private:
 	vector<vector<size_t>* >routeG ;
 	size_t cost;
 	size_t serverNum;
+	map<size_t,size_t>serverInUse;
 
 };
 
