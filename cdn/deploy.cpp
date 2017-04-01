@@ -133,18 +133,19 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 	// 		}
 	// 	}
 	vector<size_t>serverPos;
+	size_t lastCost=9999999;
 	while(1)
 	{
 		//algorithm of serverPool
 		
-		networkInfo.deployServer(consNodeGroup,serverPos);
-		for(size_t i=0;i<serverPos.size();i++)
-		{
-			cout<<serverPos[i]<<" ";
-		}
-		cout<<endl;
+		networkInfo.deployServer(consNodeGroup,networkNodeGroup,serverPos,lastCost);
+		// for(size_t i=0;i<serverPos.size();i++)
+		// {
+		// 	cout<<serverPos[i]<<" ";
+		// }
+		// cout<<endl;
 
-		cout<<serverPos.size()<<"haha"<<networkInfo.getNumCons()<<endl;;
+		// cout<<serverPos.size()<<"haha"<<networkInfo.getNumCons()<<endl;;
 
 		while(1)
 		{
@@ -166,13 +167,13 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 				cout<<serverPos.size()<<"haha"<<networkInfo.getNumCons()<<endl;
 				cout<<"++++++++++++++++++++++++++++++++++++++\n";
 
-
+				lastCost=routeOutput->getCost();
 				routeOutput->serverUsedCal(serverPos);
 				// cout<<serverPos.size()<<endl;
 				// serverPos.pop_back();
 				// cout<<serverPos.size()<<endl;
-				string pp;
-				cin>>pp;
+				// string pp;
+				// cin>>pp;
 				break;
 			}
 			else
@@ -890,6 +891,8 @@ int NetworkInfo::loadData(NetworkNode networkNodeGroup[], ConsNode consNodeGroup
 		networkNodeGroup[tmp[1]].connectCons(tmp[0]);
 		// cout<<tmp[0]<<" "<<tmp[1]<<" "<<tmp[2]<<endl;
 		consNodeGroup[tmp[0]].editConsIndex(tmp[0]);
+
+		directLink.push_back(tmp[1]);
 	}
 
 	return 0;
@@ -1267,10 +1270,43 @@ int NetworkInfo::constructServerPool(NetworkNode networkNodeGroup[],ConsNode con
 
 	}
 
+	//map direct link
+	for(size_t i=0;i<directLink.size();i++)
+	{
+		directLinkMap[directLink[i]]=1;
+	}
+
+	return 0;
+}
+int NetworkInfo::born(vector<size_t>&p1,vector<size_t>&p2,vector<size_t>&output)
+{
+	if(output.size())
+		output.clear();
+
+	vector<unsigned int> gene(numNode,0);
+	for(size_t i=0;i<p1.size();i++)
+	{
+		gene[p1[i]]++;
+	}
+
+	for(size_t i=0;i<p2.size();i++)
+	{
+		gene[p2[i]]++;
+	}
+
+	for(size_t i=0;i<gene.size();i++)
+	{
+		if(gene[i]==2)
+			output.push_back(i);
+
+		if(gene[i]==1)
+			if(rand()%2==0)
+				output.push_back(i);
+	}
 	return 0;
 }
 
-int NetworkInfo::deployServer(ConsNode consNodeGroup[], vector<size_t>&serverPos)
+int NetworkInfo::deployServer(ConsNode consNodeGroup[], NetworkNode networkNodeGroup[] ,vector<size_t>&serverPos,size_t lastCost)
 {
 	//reset server
 	if(!consDeployFlag.size())
@@ -1290,52 +1326,94 @@ int NetworkInfo::deployServer(ConsNode consNodeGroup[], vector<size_t>&serverPos
 	// 	serverPos.clear();
 	// }
 
+	//solution queue
+	if(serverPos.size()>0)
+	{
+		list<size_t>::iterator iterCost=cost.begin();
+		list<vector<size_t>* >::iterator iterSolution=solution.begin();
+		for(;iterCost!=cost.end();iterCost++,iterSolution++)
+		{
+			if(lastCost<=*iterCost)
+				break;
+
+		}
+		
+		//don't need same
+		if(lastCost!=*iterCost)
+		{
+			cost.insert(iterCost,lastCost);
+			solution.insert(iterSolution,new vector<size_t>(serverPos));
+			if(cost.size()>10)
+			{
+				cost.pop_back();
+				vector<size_t>*tmp=solution.back();
+				solution.pop_back();
+				delete tmp;
+			}
+			//verify
+			cout<<"cost queue: ";
+			list<size_t>::iterator iter=cost.begin();
+			for(;iter!=cost.end();iter++)
+				cout<<*iter<<" ";
+			cout<<endl<<endl;
+		}
+
+
+	}
+	
 	srand(clock());
 
-	vector<size_t>tmpServerPos=serverPos;
-	serverPos.clear();
-	//don't add extra server for some client
-	for(size_t i=0;i<tmpServerPos.size();i++)
+	if(cost.size()>5&&rand()%5>0)
 	{
-		if(rand()%2==0)
+		serverPos.clear();
+
+		size_t p1=rand()%5;
+		size_t p2=rand()%5;
+
+		list<vector<size_t>* >::iterator p1Itr=solution.begin();
+		list<vector<size_t>* >::iterator p2Itr=solution.begin();
+		for(size_t i=0;i<p1;i++)
 		{
-			//erase the old element
+			p1Itr++;
 		}
-		else
+		for(size_t i=0;i<p2;i++)
 		{
-			serverPos.push_back(tmpServerPos[i]);
-			for(size_t j=0;j<serverToCons[tmpServerPos[i]].size();j++)
+			p2Itr++;
+		}
+
+		born(**p1Itr,**p2Itr,serverPos);
+		cout<<"Born: ";
+		for(size_t i=0;i<serverPos.size();i++)
+		{
+			cout<<serverPos[i]<<" ";
+		}
+		cout<<endl;
+		cout<<serverPos.size()<<"haha"<<getNumCons()<<endl;
+	}
+	else
+	{
+		serverPos.clear();
+		
+		for(size_t i=0;i<numCons;i++)
+		{
+			if(consDeployFlag[i]!=1)
 			{
-				if(rand()%2==0)//restrict producing new server
+				size_t serverPosIndex=(size_t)(rand()%consNodeGroup[i].getServerPoolSize()*0.5);
+				size_t serverChoose=consNodeGroup[i].getServerPoolServer(serverPosIndex);
+				serverPos.push_back(serverChoose);
+				
+				//set the client including same server
+				for(size_t j=0;j<serverToCons[serverChoose].size();j++)
 				{
-					consDeployFlag[serverToCons[tmpServerPos[i]][j]]=1;
+					// if(rand()%10==0)
+					// {
+						consDeployFlag[serverToCons[serverChoose][j]]++;
+					// }
 				}
 			}
 		}
-
 	}
-
-
-
 	
-	for(size_t i=0;i<numCons;i++)
-	{
-		if(consDeployFlag[i]!=1)
-		{
-			size_t serverPosIndex=(size_t)(rand()%consNodeGroup[i].getServerPoolSize()*0.2);
-			size_t serverChoose=consNodeGroup[i].getServerPoolServer(serverPosIndex);
-			serverPos.push_back(serverChoose);
-			
-			//set the client including same server
-			for(size_t j=0;j<serverToCons[serverChoose].size();j++)
-			{
-				if(rand()%1000==0)
-				{
-					consDeployFlag[serverToCons[serverChoose][j]]=1;
-				}
-			}
-		}
-	}
 	
 	return 0;
 

@@ -60,15 +60,15 @@ include CMakeFiles/cdn.dir/flags.make
 CMakeFiles/cdn.dir/cdn.cpp.o: CMakeFiles/cdn.dir/flags.make
 CMakeFiles/cdn.dir/cdn.cpp.o: /Users/msj/Desktop/HW/psmkd/cdn/cdn.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/msj/Desktop/HW/psmkd/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/cdn.dir/cdn.cpp.o"
-	/usr/local/bin/g++-5   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/cdn.dir/cdn.cpp.o -c /Users/msj/Desktop/HW/psmkd/cdn/cdn.cpp
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/cdn.dir/cdn.cpp.o -c /Users/msj/Desktop/HW/psmkd/cdn/cdn.cpp
 
 CMakeFiles/cdn.dir/cdn.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cdn.dir/cdn.cpp.i"
-	/usr/local/bin/g++-5  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/msj/Desktop/HW/psmkd/cdn/cdn.cpp > CMakeFiles/cdn.dir/cdn.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/msj/Desktop/HW/psmkd/cdn/cdn.cpp > CMakeFiles/cdn.dir/cdn.cpp.i
 
 CMakeFiles/cdn.dir/cdn.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cdn.dir/cdn.cpp.s"
-	/usr/local/bin/g++-5  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/msj/Desktop/HW/psmkd/cdn/cdn.cpp -o CMakeFiles/cdn.dir/cdn.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/msj/Desktop/HW/psmkd/cdn/cdn.cpp -o CMakeFiles/cdn.dir/cdn.cpp.s
 
 CMakeFiles/cdn.dir/cdn.cpp.o.requires:
 
@@ -84,15 +84,15 @@ CMakeFiles/cdn.dir/cdn.cpp.o.provides.build: CMakeFiles/cdn.dir/cdn.cpp.o
 CMakeFiles/cdn.dir/deploy.cpp.o: CMakeFiles/cdn.dir/flags.make
 CMakeFiles/cdn.dir/deploy.cpp.o: /Users/msj/Desktop/HW/psmkd/cdn/deploy.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/msj/Desktop/HW/psmkd/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/cdn.dir/deploy.cpp.o"
-	/usr/local/bin/g++-5   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/cdn.dir/deploy.cpp.o -c /Users/msj/Desktop/HW/psmkd/cdn/deploy.cpp
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/cdn.dir/deploy.cpp.o -c /Users/msj/Desktop/HW/psmkd/cdn/deploy.cpp
 
 CMakeFiles/cdn.dir/deploy.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cdn.dir/deploy.cpp.i"
-	/usr/local/bin/g++-5  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/msj/Desktop/HW/psmkd/cdn/deploy.cpp > CMakeFiles/cdn.dir/deploy.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/msj/Desktop/HW/psmkd/cdn/deploy.cpp > CMakeFiles/cdn.dir/deploy.cpp.i
 
 CMakeFiles/cdn.dir/deploy.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cdn.dir/deploy.cpp.s"
-	/usr/local/bin/g++-5  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/msj/Desktop/HW/psmkd/cdn/deploy.cpp -o CMakeFiles/cdn.dir/deploy.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/msj/Desktop/HW/psmkd/cdn/deploy.cpp -o CMakeFiles/cdn.dir/deploy.cpp.s
 
 CMakeFiles/cdn.dir/deploy.cpp.o.requires:
 
@@ -108,15 +108,15 @@ CMakeFiles/cdn.dir/deploy.cpp.o.provides.build: CMakeFiles/cdn.dir/deploy.cpp.o
 CMakeFiles/cdn.dir/io.cpp.o: CMakeFiles/cdn.dir/flags.make
 CMakeFiles/cdn.dir/io.cpp.o: /Users/msj/Desktop/HW/psmkd/cdn/io.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/msj/Desktop/HW/psmkd/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/cdn.dir/io.cpp.o"
-	/usr/local/bin/g++-5   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/cdn.dir/io.cpp.o -c /Users/msj/Desktop/HW/psmkd/cdn/io.cpp
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/cdn.dir/io.cpp.o -c /Users/msj/Desktop/HW/psmkd/cdn/io.cpp
 
 CMakeFiles/cdn.dir/io.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cdn.dir/io.cpp.i"
-	/usr/local/bin/g++-5  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/msj/Desktop/HW/psmkd/cdn/io.cpp > CMakeFiles/cdn.dir/io.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/msj/Desktop/HW/psmkd/cdn/io.cpp > CMakeFiles/cdn.dir/io.cpp.i
 
 CMakeFiles/cdn.dir/io.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cdn.dir/io.cpp.s"
-	/usr/local/bin/g++-5  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/msj/Desktop/HW/psmkd/cdn/io.cpp -o CMakeFiles/cdn.dir/io.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/msj/Desktop/HW/psmkd/cdn/io.cpp -o CMakeFiles/cdn.dir/io.cpp.s
 
 CMakeFiles/cdn.dir/io.cpp.o.requires:
 

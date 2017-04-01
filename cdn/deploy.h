@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <map>
 #include <time.h>
+#include <list>
 
 using namespace std;
 class NetworkNode;
@@ -47,8 +48,9 @@ public:
 	int sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, ConsNode consNodeGroup[]);
 	int solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,long int &indexConsOverLoad);
 	int mapServerToCons(ConsNode consNodeGroup[]);
-	int deployServer(ConsNode consNodeGroup[], vector<size_t>&serverPos);
+	int deployServer(ConsNode consNodeGroup[],NetworkNode networkNodeGroup[], vector<size_t>&serverPos,size_t lastCost);
 	int constructServerPool(NetworkNode networkNodeGroup[], ConsNode consNodeGroup[]);
+	int born(vector<size_t>&p1,vector<size_t>&p2,vector<size_t>&output);
 
 private:
 	size_t numNode;
@@ -60,6 +62,10 @@ private:
 	vector<vector<size_t> >costMatrix;
 	vector<int>consDeployFlag;
 	map<size_t,vector<size_t> >serverToCons;
+	vector<size_t>directLink;
+	map<size_t,size_t>directLinkMap;
+	list<vector<size_t>* >solution;
+	list<size_t>cost;
 
 
 
