@@ -17,7 +17,7 @@ if (CMAKE_BUILD_TYPE STREQUAL debug)
 endif ()
 SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb -std=c++11")
 SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall -std=c++11")
-#SET(CMAKE_CXX_COMPILER "/usr/local/bin/g++-5") 
+SET(CMAKE_CXX_COMPILER "/usr/local/bin/g++-5") 
 
 aux_source_directory(. DIR_SRCS)
 

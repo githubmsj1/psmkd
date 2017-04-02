@@ -47,6 +47,7 @@ public:
 	size_t getMatrixCost(size_t i, size_t j){return costMatrix[i][j];}
 	int sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, ConsNode consNodeGroup[]);
 	int solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,long int &indexConsOverLoad);
+	int solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,vector<long int> &indexConsOverLoad);
 	int mapServerToCons(ConsNode consNodeGroup[]);
 	int deployServer(ConsNode consNodeGroup[],NetworkNode networkNodeGroup[], vector<size_t>&serverPos,size_t lastCost);
 	int constructServerPool(NetworkNode networkNodeGroup[], ConsNode consNodeGroup[]);

@@ -193,13 +193,13 @@ void deploy_server(char * topo[MAX_EDGE_NUM], int line_num,char * filename)
 			endTime = clock();
 			double totalTime=(double)(endTime - startTimeTotal)/CLOCKS_PER_SEC;
 			startTime=endTime;
-			if(totalTime>70)
+			if(totalTime>85)
 				break;
 		}
 		endTime = clock();
 		double totalTime=(double)(endTime - startTimeTotal)/CLOCKS_PER_SEC;
 		startTime=endTime;
-		if(totalTime>70)
+		if(totalTime>85)
 			break;
 				
 		
@@ -1119,6 +1119,128 @@ int NetworkInfo::sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, C
 	return 0;
 }
 
+int NetworkInfo::solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,vector<long int> &indexConsOverLoad)
+{
+			
+	//generate and select the flow
+	int demandSatisfied=0;
+	for(size_t k=0;k<this->getNumCons();k++)
+	{
+		// cout<<"Q1 "<<k<<endl;spfa
+		// consNodeGroup[k].saps(networkNodeGroup,*this,serverPos,consNodeGroup[k].getToIndexNode());
+		consNodeGroup[k].spfa(networkNodeGroup,*this,serverPos,consNodeGroup[k].getToIndexNode());
+		if(consNodeGroup[k].selectFlow()!=0)
+		{
+			 cout<<"select: "<<-1<<endl;//can't satifiy the demand
+			demandSatisfied=-1;
+			indexConsOverLoad.push_back(k);
+		}
+		// cout<<"Q2"<<endl;
+
+	}
+
+	if(demandSatisfied==-1)
+	{
+		for(size_t i=0;i<this->getNumCons();i++)
+		{
+			consNodeGroup[i].clearRoute();
+		}
+		// cout<<"demand not satisied!!!"<<endl;
+		return -1;
+
+	}
+	
+	//test regulate
+	int bandWidthNormal=-1;
+	// cout<<"**************************************\n";
+	for(size_t i=0;i<3;i++)
+	{
+		vector<pair<size_t, size_t> > overLoadEdge;
+		vector<long int> overLoad;
+		
+
+		if(globalEdgeMatrix.checkCons(consNodeGroup,*this,overLoadEdge,overLoad)==0)
+		{
+			// cout<<"No flow overload."<<endl;
+			bandWidthNormal=0;
+			// indexConsOverLoad=-1;
+			indexConsOverLoad.clear();
+			break;
+		}
+		else
+		{
+			// indexConsOverLoad=this->getNumCons()-1;	
+			for(size_t j=0;j<this->getNumCons();j++)
+			{
+					int regulated;
+					if(consNodeGroup[j].regulate(overLoadEdge,overLoad,regulated)==0)
+					{	
+						// cout<<"Regulation Done."<<endl;
+						// indexConsOverLoad=j;
+						indexConsOverLoad.push_back(j);
+						break;
+					}
+					else
+					{
+						if(regulated==0)
+							indexConsOverLoad.push_back(j);
+							// indexConsOverLoad=j;
+					}
+
+			}
+			
+		}
+		// cout<<"Regulate: "<<i<<endl;
+		// cout<<"after regulation\n";
+		// for(size_t j=0;j<overLoadEdge.size();j++)
+		// {
+		// 	cout<<"("<<overLoadEdge[j].first<<","<<overLoadEdge[j].second<<"): "<<overLoad[j]<<endl;
+		// }
+
+	}
+
+	//output the solution
+	if(bandWidthNormal==0)
+	{
+		routeOutput=new Route();
+
+		//output the route for those apply flow from other servers
+		for(size_t k=0;k<this->getNumCons();k++)
+		{
+			for(size_t i=0;i<consNodeGroup[k].getNumFlow();i++)
+			{
+				vector<size_t>* route=new vector<size_t>();
+				consNodeGroup[k].popRoute(i,route);
+				routeOutput->pushRoute(route);
+			}
+
+		}
+
+		//calculate cost
+		cout<<"**************************************\n";
+		cout<<"bandwidth is normal."<<endl;
+		cout<<"total Cost: "<<routeOutput->costCal(*this)<<endl;	
+		cout<<"++++++++++++++++++++++++++++++++++++++\n";
+
+		
+	}
+	else
+	{	
+		cout<<"**************************************\n";
+		cout<<"bandwidth is overused!"<<endl;
+		cout<<"++++++++++++++++++++++++++++++++++++++\n";
+	}
+
+	//clean sap route associated with server position and number
+	for(size_t i=0;i<this->getNumCons();i++)
+	{
+		consNodeGroup[i].clearRoute();
+	}
+	
+
+	return bandWidthNormal;
+}
+
 int NetworkInfo::solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,long int &indexConsOverLoad)
 {
 			
@@ -1253,7 +1375,7 @@ int NetworkInfo::constructServerPool(NetworkNode networkNodeGroup[],ConsNode con
 			}
 		}
 		
-		consNodeGroup[i].saps(networkNodeGroup,*this,extraServerPos,consNodeGroup[i].getToIndexNode());
+		consNodeGroup[i].spfa(networkNodeGroup,*this,extraServerPos,consNodeGroup[i].getToIndexNode());
 		consNodeGroup[i].constructServerPool();
 		consNodeGroup[i].clearRoute();
 
@@ -1363,12 +1485,12 @@ int NetworkInfo::deployServer(ConsNode consNodeGroup[], NetworkNode networkNodeG
 	
 	srand(clock());
 
-	if(cost.size()>5&&rand()%5>0)
+	if(cost.size()>2&&rand()%5>1)
 	{
 		serverPos.clear();
 
-		size_t p1=rand()%5;
-		size_t p2=rand()%5;
+		size_t p1=rand()%cost.size();
+		size_t p2=rand()%cost.size();
 
 		list<vector<size_t>* >::iterator p1Itr=solution.begin();
 		list<vector<size_t>* >::iterator p2Itr=solution.begin();
@@ -1393,22 +1515,25 @@ int NetworkInfo::deployServer(ConsNode consNodeGroup[], NetworkNode networkNodeG
 	else
 	{
 		serverPos.clear();
-		
+		size_t randomOffset=rand()%numCons;
+		size_t iOffset=0;
 		for(size_t i=0;i<numCons;i++)
 		{
-			if(consDeployFlag[i]!=1)
-			{
-				size_t serverPosIndex=(size_t)(rand()%consNodeGroup[i].getServerPoolSize()*0.5);
-				size_t serverChoose=consNodeGroup[i].getServerPoolServer(serverPosIndex);
+			iOffset=(i+randomOffset)%numCons;
+			if(consDeployFlag[iOffset]!=1)
+			{	
+				// cout<<"-------------------"<<consNodeGroup[i].getServerPoolSize()<<endl;
+				size_t serverPosIndex=(size_t)(rand()%consNodeGroup[iOffset].getServerPoolSize()*0.02);
+				size_t serverChoose=consNodeGroup[iOffset].getServerPoolServer(serverPosIndex);
 				serverPos.push_back(serverChoose);
 				
-				//set the client including same server
+				// set the client including same server
 				for(size_t j=0;j<serverToCons[serverChoose].size();j++)
 				{
-					// if(rand()%10==0)
-					// {
+					if(rand()%2==0)
+					{
 						consDeployFlag[serverToCons[serverChoose][j]]++;
-					// }
+					}
 				}
 			}
 		}
