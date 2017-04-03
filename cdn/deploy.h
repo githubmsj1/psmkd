@@ -14,6 +14,7 @@
 #include <map>
 #include <time.h>
 #include <list>
+#include <set>
 
 using namespace std;
 class NetworkNode;
@@ -45,9 +46,10 @@ public:
 	size_t getNumLine(){return numLine;}
 	size_t getCostServer(){return costServer;}
 	size_t getMatrixCost(size_t i, size_t j){return costMatrix[i][j];}
+	int reDeploy(set<long int> &indexConsOverLoad,vector<size_t>&serverPos,ConsNode consNodeGroup[]);
 	int sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, ConsNode consNodeGroup[]);
 	int solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,long int &indexConsOverLoad);
-	int solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,vector<long int> &indexConsOverLoad);
+	int solve(NetworkNode networkNodeGroup[],ConsNode consNodeGroup[],vector<size_t>&serverPos,Route* &routeOutput,EdgeMatrix& globalEdgeMatrix,set<long int> &indexConsOverLoad);
 	int mapServerToCons(ConsNode consNodeGroup[]);
 	int deployServer(ConsNode consNodeGroup[],NetworkNode networkNodeGroup[], vector<size_t>&serverPos,size_t lastCost);
 	int constructServerPool(NetworkNode networkNodeGroup[], ConsNode consNodeGroup[]);
@@ -66,7 +68,9 @@ private:
 	vector<size_t>directLink;
 	map<size_t,size_t>directLinkMap;
 	list<vector<size_t>* >solution;
+	list<vector<size_t>* >solution1;
 	list<size_t>cost;
+	list<size_t>cost1;
 
 
 
@@ -158,7 +162,7 @@ public:
 	int searchEdgeInFlow(pair<size_t, size_t> &Edge, pair<size_t,size_t> &flow);
 	long int getEdgeLoad(pair<size_t, size_t>);
 	int clearRoute();
-	size_t getTotalRestFlow(){return totalFlow-demand;};
+	long int getTotalRestFlow(){return totalFlow-demand;};
 	int constructServerPool();
 	size_t getServerPoolSize(){return serverPool.size();}
 	size_t getServerPoolServer(size_t index){return serverPool[index];};
