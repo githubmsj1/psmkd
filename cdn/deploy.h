@@ -54,6 +54,7 @@ public:
 	int deployServer(ConsNode consNodeGroup[],NetworkNode networkNodeGroup[], vector<size_t>&serverPos,size_t lastCost);
 	int constructServerPool(NetworkNode networkNodeGroup[], ConsNode consNodeGroup[]);
 	int born(vector<size_t>&p1,vector<size_t>&p2,vector<size_t>&output);
+	int solveSpfa(NetworkNode _networkNodeGroup[],vector<size_t>& _start, ConsNode consNodeGroup[],Route* &routeOutput,set<long int> &indexConsOverLoad);
 
 private:
 	size_t numNode;
