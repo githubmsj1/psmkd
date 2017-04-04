@@ -1135,7 +1135,6 @@ int NetworkInfo::sapss(NetworkNode _networkNodeGroup[],vector<size_t>& _start, C
 }
 int NetworkInfo::solveSpfa(NetworkNode _networkNodeGroup[],vector<size_t>& _start, ConsNode consNodeGroup[],Route* &routeOutput,set<long int> &indexConsOverLoad)
 {
-
 	//copy tmp networkNodeGroup
 	vector<NetworkNode> networkNodeGroup;
 	for (size_t i=0;i<(*this).getNumNode();i++)
@@ -1217,6 +1216,15 @@ int NetworkInfo::solveSpfa(NetworkNode _networkNodeGroup[],vector<size_t>& _star
 
 
 	size_t numNode=getNumNode()+2;
+
+
+	//copy the new networknode
+	vector<NetworkNode> networkNodeGroup1;
+	for (size_t i=0;i<(*this).getNumNode()+2;i++)
+	{
+		NetworkNode tmp(networkNodeGroup[i]);
+		networkNodeGroup1.push_back(tmp);
+	}
 
 	// size_t neck=-1;
 	// size_t u;
@@ -1328,20 +1336,20 @@ int NetworkInfo::solveSpfa(NetworkNode _networkNodeGroup[],vector<size_t>& _star
 				flow_ans+=sum;
 			}
 			
-			size_t start1=tmpPath.back();
-			size_t end1=tmpPath.front();
+			// size_t start1=tmpPath.back();
+			// size_t end1=tmpPath.front();
 
-			Flow *tmp=new Flow(start1,end1);
-			tmp->editFlow(sum);
+			// Flow *tmp=new Flow(start1,end1);
+			// tmp->editFlow(sum);
 
-			for(long int i=tmpPath.size()-1;i>=0;i--)
-			{
-				tmp->pushPair(tmpPath[i],tmpEdge[i]);
-				tmp->editFlowCostUnit(networkNodeGroup[tmpPath[i]].getCostUnit(tmpEdge[i]));
-			}
+			// for(long int i=tmpPath.size()-1;i>=0;i--)
+			// {
+			// 	tmp->pushPair(tmpPath[i],tmpEdge[i]);
+			// 	tmp->editFlowCostUnit(networkNodeGroup[tmpPath[i]].getCostUnit(tmpEdge[i]));
+			// }
 
-			vector<Flow* >&flowLib=*(consNodeGroup[indexCons].getFlowLib());
-			flowLib.push_back(tmp);
+			// vector<Flow* >&flowLib=*(consNodeGroup[indexCons].getFlowLib());
+			// flowLib.push_back(tmp);
 
 			//verify whether satisfaction
 
@@ -1360,21 +1368,175 @@ int NetworkInfo::solveSpfa(NetworkNode _networkNodeGroup[],vector<size_t>& _star
 		}
 	}
 
-	//set flowused
-	for(size_t i=0;i<numCons;i++)
-	{
-		vector<Flow* >&flowLib=*(consNodeGroup[i].getFlowLib());
-		vector<pair<size_t,size_t> >&flowUsed=*(consNodeGroup[i].getFlowUsed());
-		for(size_t j=0;j<flowLib.size();j++)
-		{
-			pair<size_t,size_t>tmp(j,flowLib[j]->getRestFlow());
-			flowUsed.push_back(tmp);
-		}
-	}
+
 	
 	
 	if(satisfied==0)
 	{
+		//get the real route
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		demandRest.clear();
+		for(size_t i=0;i<numCons;i++)
+		{
+			demandRest.push_back(consNodeGroup[i].getDemand());
+		}
+
+		//DFS
+		vector<size_t>nodeStack;
+		
+		for(size_t i=0;i<numNode;i++)
+		{
+			vis[i]=0;
+		}
+		nodeStack.push_back(start);
+		vis[start]=1;
+		while(nodeStack.size())
+		{
+			size_t u=nodeStack.back();
+
+			//find one edge
+			int pathOrNot=-1;
+			for(size_t j=0;j<networkNodeGroup[u].getEdgeSize();j++)
+			{
+				size_t IndexNext=networkNodeGroup[u].getToIndexNode(j);
+
+				size_t fullBandWidth=networkNodeGroup1[u].getBandWidth(j);
+
+				// cout<<networkNodeGroup[u].getBandWidth(j)<<" "<<fullBandWidth<<endl;
+
+
+				if(networkNodeGroup[u].getBandWidth(j)<fullBandWidth&&vis[IndexNext]==0)
+				{
+					// cout<<u<<" "<<IndexNext<<endl;
+
+					pre[IndexNext]=u;
+					curEdge[IndexNext]=j;
+					vis[IndexNext]=1;
+					nodeStack.push_back(IndexNext);
+					pathOrNot=0;
+					break;
+				}
+			}
+	// cout<<"---------------------------------p1"<<endl;
+			//sign of go throuh all the route and the stack it empty
+			if(pathOrNot==-1)
+			{
+				cout<<u<<"here"<<start<<endl;
+				vis[u]=1;
+				nodeStack.pop_back();
+				if(nodeStack.size()==0)
+					break;
+			}
+
+
+			if(nodeStack.back()==end)
+			{
+
+// cout<<"---------------------------------p2"<<endl;
+				//recall
+
+				//record edge
+				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+				vector<size_t>tmpPath;
+				vector<size_t>tmpEdge;
+				size_t sum=9999999;
+
+				// tmpPath.push_back(end);
+				// tmpEdge.push_back(0);
+
+				//recall point
+				size_t recallPoint=start;
+				for(size_t i=end;i!=start;i=pre[i])
+				{	
+					
+					size_t restBandWidth=networkNodeGroup1[pre[i]].getBandWidth(curEdge[i])-networkNodeGroup[pre[i]].getBandWidth(curEdge[i]);
+
+					// sum=sum<restBandWidth?sum:restBandWidth;
+					if(sum>=restBandWidth)
+					{
+						sum=restBandWidth;
+						recallPoint=pre[i];
+
+					}
+
+					// cout<<networkNodeGroup1[pre[i]].getBandWidth(curEdge[i])<<" "<<networkNodeGroup[pre[i]].getBandWidth(curEdge[i])<<endl;
+					if(pre[i]!=start)
+					{
+						tmpPath.push_back(pre[i]);
+						tmpEdge.push_back(curEdge[i]);
+					}
+
+				}
+				
+				//recall
+				while(1)
+				{
+					if(nodeStack.back()==recallPoint)
+						break;
+					vis[nodeStack.back()]=0;
+					nodeStack.pop_back();
+				}
+
+
+
+				size_t indexCons=networkNodeGroup[tmpPath.front()].getToIndexCons();
+				// demandRest[indexCons]-=sum;
+				// cout<<"demandRest: "<<demandRest[indexCons]<<endl;
+				// if(sum>demandRest[indexCons])//rest>need
+				// {
+				// 	sum=demandRest[indexCons];
+				// 	demandRest[indexCons]=0;
+				// }
+				// else//rest<=need
+				// {
+				// 	demandRest[indexCons]-=sum;
+				// }
+
+
+
+				for(size_t i=end;i!=start;i=pre[i])
+				{
+
+					size_t indexPre=pre[i];
+					networkNodeGroup[indexPre].editBandWidth(curEdge[i],sum);
+					// flow_ans+=sum;
+				}
+				
+				size_t start1=tmpPath.back();
+				size_t end1=tmpPath.front();
+
+				Flow *tmp=new Flow(start1,end1);
+				tmp->editFlow(sum);
+
+				for(long int i=tmpPath.size()-1;i>=0;i--)
+				{
+					tmp->pushPair(tmpPath[i],tmpEdge[i]);
+					tmp->editFlowCostUnit(networkNodeGroup[tmpPath[i]].getCostUnit(tmpEdge[i]));
+				}
+
+				vector<Flow* >&flowLib=*(consNodeGroup[indexCons].getFlowLib());
+				flowLib.push_back(tmp);
+
+				//~~~~~~~~~~~~~~~~~~~~~
+
+			}
+
+		}
+
+		//set flowused
+		for(size_t i=0;i<numCons;i++)
+		{
+			vector<Flow* >&flowLib=*(consNodeGroup[i].getFlowLib());
+			vector<pair<size_t,size_t> >&flowUsed=*(consNodeGroup[i].getFlowUsed());
+			for(size_t j=0;j<flowLib.size();j++)
+			{
+				pair<size_t,size_t>tmp(j,flowLib[j]->getRestFlow());
+				flowUsed.push_back(tmp);
+			}
+		}
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 		routeOutput=new Route();
 
 		//output the route for those apply flow from other servers
