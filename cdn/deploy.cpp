@@ -1166,12 +1166,12 @@ int NetworkInfo::solveSpfa(NetworkNode _networkNodeGroup[],vector<size_t>& _star
 
 	//construct a total start, connecting to all start.
 	NetworkNode tmpNode;
-	// cout<<"start: ";
-	// for(size_t i=0;i<_start.size();i++)
-	// {
-	// 	cout<<_start[i]<<" ";
-	// }
-	// cout<<endl;
+	cout<<"start: ";
+	for(size_t i=0;i<_start.size();i++)
+	{
+		cout<<_start[i]<<" ";
+	}
+	cout<<endl;
 	for(size_t i=0;i<_start.size();i++)
 	{	
 		//ToIndexNode BandWidth CostUnit
@@ -1189,12 +1189,12 @@ int NetworkInfo::solveSpfa(NetworkNode _networkNodeGroup[],vector<size_t>& _star
 	//construct a total end, connecting to all client. 
 	NetworkNode tmpNode1;
 	
-	cout<<"end: ";
-	for(size_t i=0;i<_end.size();i++)
-	{
-		cout<<_end[i]<<" ";
-	}
-	cout<<endl;
+	// cout<<"end: ";
+	// for(size_t i=0;i<_end.size();i++)
+	// {
+	// 	cout<<_end[i]<<" ";
+	// }
+	// cout<<endl;
 	for(size_t i=0;i<_end.size();i++)
 	{	
 		//ToIndexNode BandWidth CostUnit
@@ -1306,6 +1306,7 @@ int NetworkInfo::solveSpfa(NetworkNode _networkNodeGroup[],vector<size_t>& _star
 			
 			size_t indexCons=networkNodeGroup[tmpPath.front()].getToIndexCons();
 			demandRest[indexCons]-=sum;
+			// cout<<"demandRest: "<<demandRest[indexCons]<<endl;
 			// if(sum>demandRest[indexCons])//rest>need
 			// {
 			// 	sum=demandRest[indexCons];
@@ -1840,7 +1841,7 @@ int NetworkInfo::deployServer(ConsNode consNodeGroup[], NetworkNode networkNodeG
 		{
 			cost.insert(iterCost,lastCost);
 			solution.insert(iterSolution,new vector<size_t>(serverPos));
-			if(cost.size()>40)
+			if(cost.size()>100)
 			{
 				cost.pop_back();
 				vector<size_t>*tmp=solution.back();
@@ -1860,7 +1861,7 @@ int NetworkInfo::deployServer(ConsNode consNodeGroup[], NetworkNode networkNodeG
 	
 	srand(clock());
 
-	if(cost.size()>20&&rand()%10>1)
+	if(cost.size()>90&&rand()%10>1)
 	{
 		serverPos.clear();
 
