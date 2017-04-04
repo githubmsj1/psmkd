@@ -1165,11 +1165,11 @@ int NetworkInfo::solveSpfa(NetworkNode _networkNodeGroup[],vector<size_t>& _star
 
 	//construct a total start, connecting to all start.
 	NetworkNode tmpNode;
-	cout<<"start: ";
-	for(size_t i=0;i<_start.size();i++)
-	{
-		cout<<_start[i]<<" ";
-	}
+	// cout<<"start: ";
+	// for(size_t i=0;i<_start.size();i++)
+	// {
+	// 	cout<<_start[i]<<" ";
+	// }
 	cout<<endl;
 	for(size_t i=0;i<_start.size();i++)
 	{	
@@ -1421,7 +1421,7 @@ int NetworkInfo::solveSpfa(NetworkNode _networkNodeGroup[],vector<size_t>& _star
 			//sign of go throuh all the route and the stack it empty
 			if(pathOrNot==-1)
 			{
-				cout<<u<<"here"<<start<<endl;
+				// cout<<u<<"here"<<start<<endl;
 				vis[u]=1;
 				nodeStack.pop_back();
 				if(nodeStack.size()==0)
@@ -2003,7 +2003,7 @@ int NetworkInfo::deployServer(ConsNode consNodeGroup[], NetworkNode networkNodeG
 		{
 			cost.insert(iterCost,lastCost);
 			solution.insert(iterSolution,new vector<size_t>(serverPos));
-			if(cost.size()>100)
+			if(cost.size()>50)
 			{
 				cost.pop_back();
 				vector<size_t>*tmp=solution.back();
@@ -2023,7 +2023,7 @@ int NetworkInfo::deployServer(ConsNode consNodeGroup[], NetworkNode networkNodeG
 	
 	srand(clock());
 
-	if(cost.size()>90&&rand()%10>1)
+	if(cost.size()>40&&rand()%10>1)
 	{
 		serverPos.clear();
 
