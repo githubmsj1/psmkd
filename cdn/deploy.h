@@ -55,6 +55,12 @@ public:
 	int constructServerPool(NetworkNode networkNodeGroup[], ConsNode consNodeGroup[]);
 	int born(vector<size_t>&p1,vector<size_t>&p2,vector<size_t>&output);
 	int solveSpfa(NetworkNode _networkNodeGroup[],vector<size_t>& _start, ConsNode consNodeGroup[],Route* &routeOutput,set<long int> &indexConsOverLoad);
+	int initInherit(size_t numGroup);
+	int deployServerInherit(ConsNode consNodeGroup[], NetworkNode networkNodeGroup[] ,vector<size_t>&serverPos,size_t indexGroup);
+	int saveServerInherit(vector<size_t>&serverPos,size_t lastCost,size_t indexGroup);	
+	size_t getNumInherit(){return solutionGroup.size();}
+	int deployServerInheritGroupCross(vector<size_t>&serverPos);
+	int saveServerInheritGroupCross(vector<size_t>&serverPos, size_t lastCost);
 
 private:
 	size_t numNode;
@@ -68,11 +74,11 @@ private:
 	map<size_t,vector<size_t> >serverToCons;
 	vector<size_t>directLink;
 	map<size_t,size_t>directLinkMap;
-	list<vector<size_t>* >solution;
-	list<vector<size_t>* >solution1;
-	list<size_t>cost;
-	list<size_t>cost1;
+	list<vector<size_t>* >solutionCross;
+	list<size_t>costCross;
 
+	vector<list<vector<size_t>* > >solutionGroup;
+	vector<list<size_t> >costGroup;
 
 
 };
