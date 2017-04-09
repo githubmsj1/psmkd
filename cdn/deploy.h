@@ -61,6 +61,9 @@ public:
 	size_t getNumInherit(){return solutionGroup.size();}
 	int deployServerInheritGroupCross(vector<size_t>&serverPos);
 	int saveServerInheritGroupCross(vector<size_t>&serverPos, size_t lastCost);
+	int born3(vector<size_t>&p1,vector<size_t>&p2,vector<size_t>&p3,vector<size_t>&output);
+	int randomBorn(vector<size_t>& output,size_t indexGroup);
+	int initServerPool(ConsNode consNodeGroup[]);
 
 private:
 	size_t numNode;
@@ -79,7 +82,7 @@ private:
 
 	vector<list<vector<size_t>* > >solutionGroup;
 	vector<list<size_t> >costGroup;
-
+	vector<size_t>serverPosSorted;
 
 };
 	

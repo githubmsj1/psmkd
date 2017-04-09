@@ -6,27 +6,27 @@
 
 #IncludeRegexTransform: 
 
-/Users/msj/Desktop/HW/psmkd/cdn/cdn.cpp
+/home/game/SDK-gcc/cdn/cdn.cpp
 deploy.h
-/Users/msj/Desktop/HW/psmkd/cdn/deploy.h
+/home/game/SDK-gcc/cdn/deploy.h
 lib_io.h
-/Users/msj/Desktop/HW/psmkd/cdn/lib_io.h
+/home/game/SDK-gcc/cdn/lib_io.h
 lib_time.h
-/Users/msj/Desktop/HW/psmkd/cdn/lib_time.h
+/home/game/SDK-gcc/cdn/lib_time.h
 stdio.h
-/Users/msj/Desktop/HW/psmkd/cdn/stdio.h
+/home/game/SDK-gcc/cdn/stdio.h
 
-/Users/msj/Desktop/HW/psmkd/cdn/deploy.cpp
+/home/game/SDK-gcc/cdn/deploy.cpp
 deploy.h
-/Users/msj/Desktop/HW/psmkd/cdn/deploy.h
+/home/game/SDK-gcc/cdn/deploy.h
 stdio.h
 -
 iostream
 -
 
-/Users/msj/Desktop/HW/psmkd/cdn/deploy.h
+/home/game/SDK-gcc/cdn/deploy.h
 lib_io.h
-/Users/msj/Desktop/HW/psmkd/cdn/lib_io.h
+/home/game/SDK-gcc/cdn/lib_io.h
 stdlib.h
 -
 iostream
@@ -52,7 +52,7 @@ list
 set
 -
 
-/Users/msj/Desktop/HW/psmkd/cdn/io.cpp
+/home/game/SDK-gcc/cdn/io.cpp
 stdio.h
 -
 stdlib.h
@@ -72,7 +72,7 @@ unistd.h
 signal.h
 -
 
-/Users/msj/Desktop/HW/psmkd/cdn/lib/lib_io.h
+/home/game/SDK-gcc/cdn/lib/lib_io.h
 
-/Users/msj/Desktop/HW/psmkd/cdn/lib/lib_time.h
+/home/game/SDK-gcc/cdn/lib/lib_time.h
 
